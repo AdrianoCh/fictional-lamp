@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">sigavan</string>
+
+    //Main Activicty
+    <string name="sobreVoce">Vamos Falar Sobre Você!</string>
+    <string name="nome">Nome: </string>
+    <string name="dicaNome">Insira seu nome</string>
+    <string name="motorista">Motorista</string>
+    <string name="passageiro">Passageiro</string>
+    <string name="modoUso">Modo De Uso</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="Cancelar">Cancelar</string>
+    <string name="telefone">Telefone: </string>
+    <string name="dicaTelefone">Insira seu telefone</string>
+</resources>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp" >
+
+    <TextView
+        android:id="@+id/textoPrincipal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp"
+        android:gravity="center"
+        android:text="@string/sobreVoce"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/nomeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textoPrincipal"
+        android:layout_marginTop="110dp"
+        android:text="@string/nome"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/nomeEditText"
+        android:layout_width="276dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/nomeTextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="92dp"
+        android:gravity="center"
+        android:hint="@string/dicaNome"
+        android:inputType="textPersonName"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/telefoneEditText"
+        android:layout_alignStart="@+id/textoPrincipal"
+        android:text="@string/telefone"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/telefoneEditText"
+        android:layout_width="264dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textoPrincipal"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="185dp"
+        android:hint="@string/dicaTelefone"
+        android:textSize="20dp"
+        android:inputType="phone"
+        android:gravity="center"/>
+
+    <RadioGroup
+        android:id="@+id/modoDeUsoRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="160dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/modoUso"
+            android:textSize="20dp" />
+
+        <RadioButton
+            android:id="@+id/Motorista"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/motorista"
+            android:textSize="17dp" />
+
+        <RadioButton
+            android:id="@+id/Passageiro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/passageiro"
+            android:textSize="17dp"
+            android:onClick=""/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/confirmarButton"
+        android:layout_width="169dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textoPrincipal"
+        android:layout_alignTop="@+id/cancelarButton"
+        android:text="@string/confirmar"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/cancelarButton"
+        android:layout_width="171dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/textoPrincipal"
+        android:layout_marginBottom="42dp"
+        android:text="@string/Cancelar"
+        android:textSize="20dp" />
+
+</RelativeLayout>
