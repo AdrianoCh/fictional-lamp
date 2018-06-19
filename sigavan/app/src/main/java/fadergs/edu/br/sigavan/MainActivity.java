@@ -8,13 +8,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
@@ -23,14 +28,15 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDataDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private ChildEventListener mChildEventListener;
 
     private Button confirmarButton;
     private Button cancelarButton;
-    private EditText nomeEditText;
     private EditText telefoneEditText;
     private RadioGroup modoDeUsoRadioGroup;
+    private TextView nomeUsuarioTextView;
 
-    private String perfilUsuario;
+    private String perfilUsuarioRegistrado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
         confirmarButton = (Button) findViewById(R.id.confirmarButton);
         cancelarButton = (Button) findViewById(R.id.cancelarButton);
-        nomeEditText = (EditText) findViewById(R.id.nomeEditText);
         telefoneEditText = (EditText) findViewById(R.id.telefoneEditText);
         modoDeUsoRadioGroup = (RadioGroup) findViewById(R.id.modoDeUsoRadioGroup);
+        nomeUsuarioTextView = (TextView) findViewById(R.id.nomeUsuarioTextView);
 
         mFirebaseDataBase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -56,10 +62,14 @@ public class MainActivity extends AppCompatActivity {
                 RadioButton radioButton = (RadioButton) findViewById(modoDeUsoSelecionado);
                 String textoModoDeUso = (String) radioButton.getText();
 
-                PerfilUsuario perfilUsuario = new PerfilUsuario(nomeEditText.getText().toString(), telefoneEditText.getText().toString(), textoModoDeUso);
+                FirebaseUser emailCurrentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+                String email = emailCurrentFirebaseUser.getEmail();
+
+                PerfilUsuario perfilUsuario = new PerfilUsuario(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
                 mDataDatabaseReference.push().setValue(perfilUsuario);
             }
         });
+
     mAuthStateListener = new FirebaseAuth.AuthStateListener() {
         @Override
         public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -95,12 +105,67 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 
-    public void onSignedInInitialize(String username){
-        perfilUsuario = username;
-        Toast.makeText(this, "Bem Vindo " + perfilUsuario, Toast.LENGTH_SHORT).show();
+    public void onSignedInInitialize(String username) {
+        perfilUsuarioRegistrado = username;
+        nomeUsuarioTextView.setText(perfilUsuarioRegistrado);
+
+        Toast.makeText(this, "Bem Vindo " + perfilUsuarioRegistrado, Toast.LENGTH_SHORT).show();
+
+        mChildEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                PerfilUsuario perfilUsuario = dataSnapshot.getValue(PerfilUsuario.class);
+
+                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+                String email = currentFirebaseUser.getEmail().toString();
+                String emailContructor = perfilUsuario.getEmail().toString();
+                Boolean primeiroLogin = perfilUsuario.getPrimeiroLogin();
+
+                if((primeiroLogin == false) && (email.equals(emailContructor))){
+                    //TODO: MANTER NA ACTIVITY DE CADASTRO
+                    System.out.println("É PRIMEIRA VEZ");
+                } else{
+                    System.out.println("NÃO É A PRIMEIRA VEZ");
+                    //TODO: LEVAR PARA ACTIVITY DE USUARIO JA CADASTRADO
+                    if((email.equals(emailContructor)) && (perfilUsuario.getModoDeUso().equals("Motorista"))){
+                        //TODO: Levar PARA ACTIVITY DE MOTORISTA
+                    } else if((email.equals(emailContructor)) && (perfilUsuario.getModoDeUso().equals("Passageiro"))){
+                        //TODO: LEVAR PARA ACTIVITY DE PASSAGEIRO
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        mDataDatabaseReference.addChildEventListener(mChildEventListener);
+
+
+
+
+
+
     }
 
-    public void onSignedOutCleanUp(){
+    public void onSignedOutCleanUp() {
 
     }
 }

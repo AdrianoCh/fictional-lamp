@@ -4,14 +4,18 @@ public class PerfilUsuario {
     private String nome;
     private String telefone;
     private String modoDeUso;
+    private Boolean primeiroLogin;
+    private String email;
 
     public PerfilUsuario(){
     }
 
-    public PerfilUsuario(String nome, String telefone, String modoDeUso){
+    public PerfilUsuario(String nome, String telefone, String modoDeUso, Boolean primeiroLogin, String email){
         this.nome = nome;
         this.telefone = telefone;
         this.modoDeUso = modoDeUso;
+        this.primeiroLogin = primeiroLogin;
+        this.email = email;
     }
 
     public String getNome() {
@@ -38,8 +42,20 @@ public class PerfilUsuario {
         this.modoDeUso = modoDeUso;
     }
 
+    public Boolean getPrimeiroLogin() {
+        return primeiroLogin;
+    }
 
+    public void setPrimeiroLogin(Boolean primeiroLogin) {
+        this.primeiroLogin = primeiroLogin;
+    }
 
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
 

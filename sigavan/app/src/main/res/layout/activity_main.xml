@@ -26,17 +26,16 @@
         android:text="@string/nome"
         android:textSize="20dp" />
 
-    <EditText
-        android:id="@+id/nomeEditText"
-        android:layout_width="276dp"
+    <TextView
+        android:id="@+id/nomeUsuarioTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/nomeTextView"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="92dp"
-        android:gravity="center"
-        android:hint="@string/dicaNome"
-        android:inputType="textPersonName"
+        android:layout_alignTop="@+id/nomeTextView"
+        android:layout_marginStart="115dp"
         android:textSize="20dp" />
+
+
 
     <TextView
         android:layout_width="wrap_content"
