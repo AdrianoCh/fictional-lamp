@@ -127,11 +127,13 @@ public class MainActivity extends AppCompatActivity {
                 } else{
                     System.out.println("NÃO É A PRIMEIRA VEZ");
                     //TODO: LEVAR PARA ACTIVITY DE USUARIO JA CADASTRADO
-                    if((email.equals(emailContructor)) && (perfilUsuario.getModoDeUso().equals("Motorista"))){
-                        //TODO: Levar PARA ACTIVITY DE MOTORISTA
-                    } else if((email.equals(emailContructor)) && (perfilUsuario.getModoDeUso().equals("Passageiro"))){
-                        //TODO: LEVAR PARA ACTIVITY DE PASSAGEIRO
-                    }
+                }
+                if((email.equals(emailContructor)) && (perfilUsuario.getModoDeUso().equals("Motorista"))){
+                    //TODO: Levar PARA ACTIVITY DE MOTORISTA
+                    System.out.println("MOTORISTA");
+                } else if((email.equals(emailContructor)) && (perfilUsuario.getModoDeUso().equals("Passageiro"))){
+                    //TODO: LEVAR PARA ACTIVITY DE PASSAGEIRO
+                    System.out.println("PASSAGEIRO");
                 }
             }
 
@@ -157,12 +159,6 @@ public class MainActivity extends AppCompatActivity {
         };
 
         mDataDatabaseReference.addChildEventListener(mChildEventListener);
-
-
-
-
-
-
     }
 
     public void onSignedOutCleanUp() {
