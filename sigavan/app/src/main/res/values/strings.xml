@@ -13,7 +13,12 @@
     <string name="telefone">Telefone: </string>
     <string name="dicaTelefone">Insira seu telefone</string>
 
+    //FULLSCREEN ACTIVITY
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">COMEÇAR!</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    //PASSAGEIRO ACTIVITY
+    <string name="presente">Presente!</string>
+    <string name="ausente">Ausente!</string>
 </resources>

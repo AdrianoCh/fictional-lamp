@@ -1,5 +1,6 @@
 package fadergs.edu.br.sigavan;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +20,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.firebase.ui.auth.AuthUI;
-import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseDataBase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
 
+        FirebaseUser usuario = mFirebaseAuth.getCurrentUser();
+
         mDataDatabaseReference = mFirebaseDataBase.getReference().child("users");
 
         confirmarButton.setOnClickListener(new View.OnClickListener() {
@@ -65,8 +67,14 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser emailCurrentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
                 String email = emailCurrentFirebaseUser.getEmail();
 
-                PerfilUsuario perfilUsuario = new PerfilUsuario(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
-                mDataDatabaseReference.push().setValue(perfilUsuario);
+                if(textoModoDeUso == "Motorista"){
+                    PerfilUsuarioMotorista perfilUsuarioMotorista = new PerfilUsuarioMotorista(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
+                    mDataDatabaseReference.push().setValue(perfilUsuarioMotorista);
+                } else {
+                    PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email, "NC");
+                    mDataDatabaseReference.push().setValue(perfilUsuarioPassageiro);
+                }
+
             }
         });
 
@@ -114,12 +122,12 @@ public class MainActivity extends AppCompatActivity {
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                PerfilUsuario perfilUsuario = dataSnapshot.getValue(PerfilUsuario.class);
+                PerfilUsuarioMotorista perfilUsuarioMotorista = dataSnapshot.getValue(PerfilUsuarioMotorista.class);
 
                 FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
                 String email = currentFirebaseUser.getEmail().toString();
-                String emailContructor = perfilUsuario.getEmail().toString();
-                Boolean primeiroLogin = perfilUsuario.getPrimeiroLogin();
+                String emailContructor = perfilUsuarioMotorista.getEmail().toString();
+                Boolean primeiroLogin = perfilUsuarioMotorista.getPrimeiroLogin();
 
                 if((primeiroLogin == false) && (email.equals(emailContructor))){
                     //TODO: MANTER NA ACTIVITY DE CADASTRO
@@ -128,12 +136,14 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("NÃO É A PRIMEIRA VEZ");
                     //TODO: LEVAR PARA ACTIVITY DE USUARIO JA CADASTRADO
                 }
-                if((email.equals(emailContructor)) && (perfilUsuario.getModoDeUso().equals("Motorista"))){
+                if((email.equals(emailContructor)) && (perfilUsuarioMotorista.getModoDeUso().equals("Motorista"))){
                     //TODO: Levar PARA ACTIVITY DE MOTORISTA
                     System.out.println("MOTORISTA");
-                } else if((email.equals(emailContructor)) && (perfilUsuario.getModoDeUso().equals("Passageiro"))){
+                } else if((email.equals(emailContructor)) && (perfilUsuarioMotorista.getModoDeUso().equals("Passageiro"))){
                     //TODO: LEVAR PARA ACTIVITY DE PASSAGEIRO
                     System.out.println("PASSAGEIRO");
+                    Intent myIntent = new Intent(MainActivity.this, PassageiroActivity.class);
+                    startActivity(myIntent);
                 }
             }
 
