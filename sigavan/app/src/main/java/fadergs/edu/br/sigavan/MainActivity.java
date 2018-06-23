@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox segundaCheckbox;
     private CheckBox tercaChecbox;
     private CheckBox quartaCheckbox;
-    private CheckBox quintaChecbox;
+    private CheckBox quintaCheckbox;
     private CheckBox sextaCheckbox;
-    private CheckBox sabadoChecbox;
+    private CheckBox sabadoCheckbox;
 
     private String perfilUsuarioRegistrado;
 
@@ -60,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
         segundaCheckbox = (CheckBox) findViewById(R.id.segundaCheckBox);
         tercaChecbox = (CheckBox) findViewById(R.id.tercaCheckbox);
         quartaCheckbox = (CheckBox) findViewById(R.id.quartaCheckBox);
-        quintaChecbox = (CheckBox) findViewById(R.id.quintaCheckbox);
+        quintaCheckbox = (CheckBox) findViewById(R.id.quintaCheckbox);
         sextaCheckbox = (CheckBox) findViewById(R.id.sextaCheckBox);
-        sabadoChecbox = (CheckBox) findViewById(R.id.sabadoCheckbox);
+        sabadoCheckbox = (CheckBox) findViewById(R.id.sabadoCheckbox);
 
         mFirebaseDataBase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -82,11 +82,45 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser emailCurrentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
                 String email = emailCurrentFirebaseUser.getEmail();
 
+                Boolean domingoSelecionado = false;
+                Boolean segundaSelecionado = false;
+                Boolean tercaSelecionado = false;
+                Boolean quartaSelecionado = false;
+                Boolean quintaSelecionado  = false;
+                Boolean sextaSelecionado  = false;
+                Boolean sabadoSelecionado = false;
+
+                if(domingoChecbox.isChecked()){
+                    domingoSelecionado = true;
+                }
+                if(segundaCheckbox.isChecked()){
+                    segundaSelecionado = true;
+                }
+                if(tercaChecbox.isChecked()){
+                    tercaSelecionado = true;
+                }
+                if(tercaChecbox.isChecked()){
+                    tercaSelecionado = true;
+                }
+                if(quartaCheckbox.isChecked()){
+                    quartaSelecionado = true;
+                }
+                if(quintaCheckbox.isChecked()){
+                    segundaSelecionado = true;
+                }
+                if(sextaCheckbox.isChecked()){
+                    sextaSelecionado = true;
+                }
+                if(sabadoCheckbox.isChecked()){
+                    sabadoSelecionado = true;
+                }
+
+
                 if(textoModoDeUso == "Motorista"){
                     PerfilUsuarioMotorista perfilUsuarioMotorista = new PerfilUsuarioMotorista(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
                     mDataDatabaseReference.push().setValue(perfilUsuarioMotorista);
                 } else {
-                    PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email, "NC");
+                    PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email, "NC", domingoSelecionado, segundaSelecionado, tercaSelecionado, quartaSelecionado, quintaSelecionado, sextaSelecionado, sabadoSelecionado);
                     mDataDatabaseReference.push().setValue(perfilUsuarioPassageiro);
                 }
 
