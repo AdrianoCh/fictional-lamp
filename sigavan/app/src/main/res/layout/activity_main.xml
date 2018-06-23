@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/textoPrincipal"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="88dp"
         android:text="@string/nome"
         android:textSize="20dp" />
 
@@ -36,12 +36,12 @@
         android:textSize="20dp" />
 
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/telefoneEditText"
+        android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/textoPrincipal"
+        android:layout_marginTop="127dp"
         android:text="@string/telefone"
         android:textSize="20dp" />
 
@@ -50,12 +50,70 @@
         android:layout_width="264dp"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/textoPrincipal"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="185dp"
+        android:layout_below="@+id/nomeTextView"
+        android:gravity="center"
         android:hint="@string/dicaTelefone"
-        android:textSize="20dp"
         android:inputType="phone"
-        android:gravity="center"/>
+        android:textSize="20dp" />
+
+    <CheckBox
+        android:id="@+id/domingoCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/confirmarButton"
+        android:text="@string/domingo" />
+
+    <CheckBox
+        android:id="@+id/segundaCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="189dp"
+        android:text="@string/segunda" />
+
+    <CheckBox
+        android:id="@+id/tercaCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/cancelarButton"
+        android:layout_alignTop="@+id/segundaCheckBox"
+        android:text="@string/terca" />
+
+    <CheckBox
+        android:id="@+id/quartaCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/confirmarButton"
+        android:layout_alignTop="@+id/segundaCheckBox"
+        android:text="@string/quarta" />
+
+    <CheckBox
+        android:id="@+id/quintaCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/segundaCheckBox"
+        android:layout_marginEnd="26dp"
+        android:text="@string/quinta" />
+
+    <CheckBox
+        android:id="@+id/sextaCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="97dp"
+        android:text="@string/sexta" />
+
+    <CheckBox
+        android:id="@+id/sabadoCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textoPrincipal"
+        android:layout_centerVertical="true"
+        android:text="@string/sabado" />
 
     <RadioGroup
         android:id="@+id/modoDeUsoRadioGroup"
@@ -63,7 +121,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="160dp">
+        android:layout_marginBottom="112dp">
 
         <TextView
             android:layout_width="wrap_content"
