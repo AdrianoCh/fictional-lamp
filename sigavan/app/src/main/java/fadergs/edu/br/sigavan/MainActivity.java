@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
                     sabadoSelecionado = true;
                 }
 
-
                 if(textoModoDeUso == "Motorista"){
                     PerfilUsuarioMotorista perfilUsuarioMotorista = new PerfilUsuarioMotorista(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
                     mDataDatabaseReference.push().setValue(perfilUsuarioMotorista);
