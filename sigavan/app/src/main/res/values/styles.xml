@@ -20,4 +20,9 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <!-- Tema personalizado -->
+    <style name="Theme.AppCompat.FullVan" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>

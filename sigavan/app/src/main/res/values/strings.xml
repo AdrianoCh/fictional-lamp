@@ -28,4 +28,7 @@
     <string name="quinta">Quinta</string>
     <string name="sexta">Sexta</string>
     <string name="sabado">Sábado</string>
+
+    //Splash Acitivty
+    <string name="icone">Ícone do Aplicativo</string>
 </resources>
