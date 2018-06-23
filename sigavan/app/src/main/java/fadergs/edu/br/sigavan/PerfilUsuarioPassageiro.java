@@ -7,7 +7,8 @@ public class PerfilUsuarioPassageiro {
     private String modoDeUso;
     private Boolean primeiroLogin;
     private String email;
-    private  String presenca;
+    private String presenca;
+
 
     public PerfilUsuarioPassageiro(){
     }

@@ -34,6 +34,62 @@
         android:layout_marginTop="165dp"
         android:textSize="20dp" />
 
+    <CheckBox
+        android:id="@+id/domingoCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/segundaCheckBox"
+        android:layout_toStartOf="@+id/confirmarPresencaButton"
+        android:text="@string/domingo" />
+
+    <CheckBox
+        android:id="@+id/segundaCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dataTextView"
+        android:layout_centerHorizontal="true"
+        android:text="@string/segunda" />
+
+    <CheckBox
+        android:id="@+id/tercaCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/sabadoCheckbox"
+        android:layout_alignTop="@+id/domingoCheckbox"
+        android:text="@string/terca" />
+
+    <CheckBox
+        android:id="@+id/quartaCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="@string/quarta" />
+
+    <CheckBox
+        android:id="@+id/quintaCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/domingoCheckbox"
+        android:text="@string/quinta" />
+
+    <CheckBox
+        android:id="@+id/sextaCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/mensagemTextView"
+        android:layout_centerVertical="true"
+        android:text="@string/sexta" />
+
+    <CheckBox
+        android:id="@+id/sabadoCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/confirmarPresencaButton"
+        android:text="@string/sabado" />
+
+
     <RadioGroup
         android:id="@+id/presencaRadioGroup"
         android:layout_width="wrap_content"

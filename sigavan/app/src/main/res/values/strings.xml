@@ -21,4 +21,11 @@
     //PASSAGEIRO ACTIVITY
     <string name="presente">Presente!</string>
     <string name="ausente">Ausente!</string>
+    <string name="domingo">Domingo</string>
+    <string name="segunda">Segunda</string>
+    <string name="terca">Terça</string>
+    <string name="quarta">Quarta</string>
+    <string name="quinta">Quinta</string>
+    <string name="sexta">Sexta</string>
+    <string name="sabado">Sábado</string>
 </resources>

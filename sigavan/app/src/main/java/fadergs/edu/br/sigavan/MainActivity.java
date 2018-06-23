@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -35,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
     private EditText telefoneEditText;
     private RadioGroup modoDeUsoRadioGroup;
     private TextView nomeUsuarioTextView;
+    private CheckBox domingoChecbox;
+    private CheckBox segundaCheckbox;
+    private CheckBox tercaChecbox;
+    private CheckBox quartaCheckbox;
+    private CheckBox quintaChecbox;
+    private CheckBox sextaCheckbox;
+    private CheckBox sabadoChecbox;
 
     private String perfilUsuarioRegistrado;
 
@@ -48,6 +56,13 @@ public class MainActivity extends AppCompatActivity {
         telefoneEditText = (EditText) findViewById(R.id.telefoneEditText);
         modoDeUsoRadioGroup = (RadioGroup) findViewById(R.id.modoDeUsoRadioGroup);
         nomeUsuarioTextView = (TextView) findViewById(R.id.nomeUsuarioTextView);
+        domingoChecbox = (CheckBox) findViewById(R.id.domingoCheckbox);
+        segundaCheckbox = (CheckBox) findViewById(R.id.segundaCheckBox);
+        tercaChecbox = (CheckBox) findViewById(R.id.tercaCheckbox);
+        quartaCheckbox = (CheckBox) findViewById(R.id.quartaCheckBox);
+        quintaChecbox = (CheckBox) findViewById(R.id.quintaCheckbox);
+        sextaCheckbox = (CheckBox) findViewById(R.id.sextaCheckBox);
+        sabadoChecbox = (CheckBox) findViewById(R.id.sabadoCheckbox);
 
         mFirebaseDataBase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
