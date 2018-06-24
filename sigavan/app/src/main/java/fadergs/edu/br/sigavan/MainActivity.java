@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.firebase.ui.auth.AuthUI;
 
+import java.util.UUID;
+
 public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
 
@@ -120,9 +122,9 @@ public class MainActivity extends AppCompatActivity {
                     mDataDatabaseReference.push().setValue(perfilUsuarioMotorista);
                 } else {
                     PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email, "NC", domingoSelecionado, segundaSelecionado, tercaSelecionado, quartaSelecionado, quintaSelecionado, sextaSelecionado, sabadoSelecionado);
-                    mDataDatabaseReference.push().setValue(perfilUsuarioPassageiro);
+                    perfilUsuarioPassageiro.setUid(UUID.randomUUID().toString());
+                    mDataDatabaseReference.child(perfilUsuarioPassageiro.getUid()).setValue(perfilUsuarioPassageiro);
                 }
-
             }
         });
 
@@ -167,27 +169,32 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Bem Vindo " + perfilUsuarioRegistrado, Toast.LENGTH_SHORT).show();
 
-        mChildEventListener = new ChildEventListener() {
+        DatabaseReference usersRef = mFirebaseDataBase.getReference().child("users");
+        usersRef.orderByValue().addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                PerfilUsuarioMotorista perfilUsuarioMotorista = dataSnapshot.getValue(PerfilUsuarioMotorista.class);
+                PerfilUsuarioPassageiro perfilUsuarioPassageiro = dataSnapshot.getValue(PerfilUsuarioPassageiro.class);
 
-                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 String email = currentFirebaseUser.getEmail().toString();
-                String emailContructor = perfilUsuarioMotorista.getEmail().toString();
-                Boolean primeiroLogin = perfilUsuarioMotorista.getPrimeiroLogin();
+                //String emailContructor = perfilUsuarioPassageiro.getEmail().toString();
 
-                if((primeiroLogin == false) && (email.equals(emailContructor))){
+                String emailBanco = dataSnapshot.child("email").getValue().toString();
+
+                Boolean primeiroLogin = perfilUsuarioPassageiro.getPrimeiroLogin();
+                System.out.println(email);
+
+                if((primeiroLogin == false) && (email.equals(emailBanco))){
                     //TODO: MANTER NA ACTIVITY DE CADASTRO
                     System.out.println("É PRIMEIRA VEZ");
-                } else{
+                }else{
                     System.out.println("NÃO É A PRIMEIRA VEZ");
                     //TODO: LEVAR PARA ACTIVITY DE USUARIO JA CADASTRADO
                 }
-                if((email.equals(emailContructor)) && (perfilUsuarioMotorista.getModoDeUso().equals("Motorista"))){
+                if((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Motorista"))){
                     //TODO: Levar PARA ACTIVITY DE MOTORISTA
                     System.out.println("MOTORISTA");
-                } else if((email.equals(emailContructor)) && (perfilUsuarioMotorista.getModoDeUso().equals("Passageiro"))){
+                } else if((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Passageiro"))){
                     //TODO: LEVAR PARA ACTIVITY DE PASSAGEIRO
                     System.out.println("PASSAGEIRO");
                     Intent myIntent = new Intent(MainActivity.this, PassageiroActivity.class);
@@ -214,9 +221,8 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        };
-
-        mDataDatabaseReference.addChildEventListener(mChildEventListener);
+        });
+        //mDataDatabaseReference.addChildEventListener(mChildEventListener);
     }
 
     public void onSignedOutCleanUp() {

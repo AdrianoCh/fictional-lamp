@@ -2,6 +2,7 @@ package fadergs.edu.br.sigavan;
 
 public class PerfilUsuarioPassageiro {
 
+    private String uid;
     private String nome;
     private String telefone;
     private String modoDeUso;
@@ -21,6 +22,7 @@ public class PerfilUsuarioPassageiro {
     }
 
     public PerfilUsuarioPassageiro(String nome, String telefone, String modoDeUso, Boolean primeiroLogin, String email, String presenca, Boolean domingo, Boolean segunda, Boolean terca, Boolean quarta, Boolean quinta, Boolean sexta, Boolean sabado){
+        this.uid = uid;
         this.nome = nome;
         this.telefone = telefone;
         this.modoDeUso = modoDeUso;
@@ -34,6 +36,14 @@ public class PerfilUsuarioPassageiro {
         this.quinta = quinta;
         this.sexta = sexta;
         this.sabado = sabado;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getNome() {
