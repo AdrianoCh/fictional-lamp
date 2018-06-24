@@ -158,86 +158,71 @@ public class PassageiroActivity extends AppCompatActivity {
 public void onSignedInInitialize(String username) {
     perfilUsuarioRegistrado = username;
 
-    Toast.makeText(this, "Bem Vindo " + perfilUsuarioRegistrado, Toast.LENGTH_SHORT).show();
+    //Toast.makeText(this, "Bem Vindo " + perfilUsuarioRegistrado, Toast.LENGTH_SHORT).show();
 
-    mChildEventListener = new ChildEventListener() {
+    DatabaseReference usersRef = mFirebaseDataBase.getReference().child("users");
+    usersRef.orderByValue().addChildEventListener(new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             PerfilUsuarioPassageiro perfilUsuarioPassageiro = dataSnapshot.getValue(PerfilUsuarioPassageiro.class);
 
+            FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            String email = currentFirebaseUser.getEmail().toString();
+            String emailServidor = dataSnapshot.child("email").getValue().toString();
+
+            String domingo = dataSnapshot.child("domingo").getValue().toString();
+            System.out.println("domningooooo --->" + domingo);
+            String segunda = dataSnapshot.child("segunda").getValue().toString();
+            System.out.println("SEGUNDAAAAA --->" + segunda);
+            String terca = dataSnapshot.child("terca").getValue().toString();
+            System.out.println("tercaaaaaaaaaaaaa --->" + terca);
+            String quarta = dataSnapshot.child("quarta").getValue().toString();
+            System.out.println("quartaaaaaaaaaaaaaaaaa --->" + quarta);
+            String quinta = dataSnapshot.child("quinta").getValue().toString();
+            System.out.println("quintaaaaaaaaaaaaa --->" + quinta);
+            String sexta = dataSnapshot.child("sexta").getValue().toString();
+            System.out.println("sextaaaaaaaaaaaaaaaa --->" + sexta);
+            String sabado = dataSnapshot.child("sabado").getValue().toString();
+            System.out.println("sabadooooooooooo --->" + sabado);
+
             Calendar c = Calendar.getInstance();
             int numeroDiaSemana = c.get(Calendar.DAY_OF_WEEK);
+            String dia = "";
 
-            String nomeDia ="";
-
-            switch(numeroDiaSemana) {
-                case 1:
-                    nomeDia = "domingo";
-                    break;
-                case 2:
-                    nomeDia = "segunda";
-                    break;
-                case 3:
-                    nomeDia = "terça";
-                    break;
-                case 4:
-                    nomeDia = "quarta";
-                    break;
-                case 5:
-                    nomeDia = "quinta";
-                    break;
-                case 6:
-                    nomeDia = "sexta";
-                    break;
-                case 7:
-                    nomeDia = "sabado";
-                    break;
-                default:
-                    nomeDia = "";
+            if (numeroDiaSemana == 1) {
+                dia = "Domingo";
+            } else if (numeroDiaSemana == 2) {
+                dia = "Segunda";
+            } else if (numeroDiaSemana == 3) {
+                dia = "Terça";
+            } else if (numeroDiaSemana == 4) {
+                dia = "Quarta";
+            } else if (numeroDiaSemana == 5) {
+                dia = "Quinta";
+            } else if (numeroDiaSemana == 6) {
+                dia = "Sexta";
+            } else if (numeroDiaSemana == 7) {
+                dia = "Sábado";
             }
 
-            FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-            String email = currentFirebaseUser.getEmail().toString();
-            String emailConstructor = perfilUsuarioPassageiro.getEmail().toString();
-            //Boolean primeiroLogin = perfilUsuarioMotorista.getPrimeiroLogin();
-            Boolean diaBdDomingo = perfilUsuarioPassageiro.getDomingo();
-            Boolean diaBdSegunda = perfilUsuarioPassageiro.getSegunda();
-            Boolean diaBdTerca = perfilUsuarioPassageiro.getTerca();
-            Boolean diaBdQuarta = perfilUsuarioPassageiro.getQuarta();
-            Boolean diaBdQuinta = perfilUsuarioPassageiro.getQuinta();
-            Boolean diaBdSexta = perfilUsuarioPassageiro.getSexta();
-            Boolean diaBdSabado = perfilUsuarioPassageiro.getSabado();
+            String data = getTime("dd/MM/yyyy");
 
-            if(nomeDia.equals("domingo")){
-                if((email.equals(emailConstructor)) && (diaBdDomingo == true)){
-
-                    System.out.println("Você esta presente no domingo???????????????????????????????????????????????");
-                }
+            if (dia.equals("Domingo") && domingo.equals("true") && email.equals(emailServidor)) {
+                System.out.println("Confirma Domingo");
+            } else if (dia.equals("Segunda") && segunda.equals("true") && email.equals(emailServidor)) {
+                System.out.println("Confirma Segunda");
+            } else if (dia.equals("Terça") && terca.equals("true") && email.equals(emailServidor)) {
+                System.out.println("Confirma Terca");
+            } else if (dia.equals("Quarta") && quarta.equals("true") && email.equals(emailServidor)) {
+                System.out.println("Confirma Quarta");
+            } else if (dia.equals("Quinta") && quinta.equals("true") && email.equals(emailServidor)) {
+                System.out.println("Confirma Quinta");
+            } else if (dia.equals("Sexta") && sexta.equals("true") && email.equals(emailServidor)) {
+                System.out.println("Confirma Sexta");
+            } else if (dia.equals("Sabado") && sabado.equals("true") && email.equals(emailServidor)) {
+                System.out.println("Confirma Sábado");
             }
-
-            if(nomeDia.equals("sabado")){
-                if(email.equals(emailConstructor) && (diaBdSabado == true)){
-                    System.out.println("Voce esta presente no sábado ???????????????????????????????????????");
-                }
-            }
-
-
-            //if((primeiroLogin == false) && (email.equals(emailContructor))){
-            //    //TODO: MANTER NA ACTIVITY DE CADASTRO
-            //    System.out.println("É PRIMEIRA VEZ");
-            //} else{
-            //    System.out.println("NÃO É A PRIMEIRA VEZ");
-            //    //TODO: LEVAR PARA ACTIVITY DE USUARIO JA CADASTRADO
-            }
-            //if((email.equals(emailContructor)) && (perfilUsuarioMotorista.getModoDeUso().equals("Motorista"))){
-            //    //TODO: Levar PARA ACTIVITY DE MOTORISTA
-            //    System.out.println("MOTORISTA");
-            //} else if((email.equals(emailContructor)) && (perfilUsuarioMotorista.getModoDeUso().equals("Passageiro"))){
-            //    //TODO: LEVAR PARA ACTIVITY DE PASSAGEIRO
-            //    System.out.println("PASSAGEIRO");
-            //    Intent myIntent = new Intent(PassageiroActivity.this, PassageiroActivity.class);
-            //    startActivity(myIntent);
-
+        }
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
@@ -257,9 +242,10 @@ public void onSignedInInitialize(String username) {
         public void onCancelled(DatabaseError databaseError) {
 
         }
-    };
+    });
+    //mDataDatabaseReference.addChildEventListener(mChildEventListener);
 
-    mDataDatabaseReference.addChildEventListener(mChildEventListener);
+
 }
 
     public void onSignedOutCleanUp() {
