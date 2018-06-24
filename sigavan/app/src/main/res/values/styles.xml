@@ -23,6 +23,8 @@
     <!-- Tema personalizado -->
     <style name="Theme.AppCompat.FullVan" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowFullscreen">true</item>
+        <item name="android:background">#009995</item>
+        <item name="android:textColor">#fff</item>
     </style>
 
 </resources>
