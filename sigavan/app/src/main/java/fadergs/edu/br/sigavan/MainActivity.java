@@ -53,18 +53,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        confirmarButton = (Button) findViewById(R.id.confirmarButton);
-        cancelarButton = (Button) findViewById(R.id.cancelarButton);
+        confirmarButton = (Button) findViewById(R.id.confirmarbutton);
         telefoneEditText = (EditText) findViewById(R.id.telefoneEditText);
         modoDeUsoRadioGroup = (RadioGroup) findViewById(R.id.modoDeUsoRadioGroup);
         nomeUsuarioTextView = (TextView) findViewById(R.id.nomeUsuarioTextView);
-        domingoChecbox = (CheckBox) findViewById(R.id.domingoCheckbox);
-        segundaCheckbox = (CheckBox) findViewById(R.id.segundaCheckBox);
-        tercaChecbox = (CheckBox) findViewById(R.id.tercaCheckbox);
-        quartaCheckbox = (CheckBox) findViewById(R.id.quartaCheckBox);
-        quintaCheckbox = (CheckBox) findViewById(R.id.quintaCheckbox);
-        sextaCheckbox = (CheckBox) findViewById(R.id.sextaCheckBox);
-        sabadoCheckbox = (CheckBox) findViewById(R.id.sabadoCheckbox);
+        //domingoChecbox = (CheckBox) findViewById(R.id.domingoCheckbox);
+        //segundaCheckbox = (CheckBox) findViewById(R.id.segundaCheckBox);
+        //tercaChecbox = (CheckBox) findViewById(R.id.tercaCheckbox);
+        //quartaCheckbox = (CheckBox) findViewById(R.id.quartaCheckBox);
+        //quintaCheckbox = (CheckBox) findViewById(R.id.quintaCheckbox);
+        //sextaCheckbox = (CheckBox) findViewById(R.id.sextaCheckBox);
+        //sabadoCheckbox = (CheckBox) findViewById(R.id.sabadoCheckbox);
+        //TODO: PASSA CHECKBOX PARA CADASTRAR ALUNO
 
         mFirebaseDataBase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
