@@ -1,0 +1,60 @@
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="79dp"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+    <TextView
+        android:id="@+id/tvTelefone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="191dp"
+        android:text="@string/telefone"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+    <EditText
+        android:id="@+id/telefonePassageiroEditText"
+        android:layout_width="279dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvTelefone"
+        android:layout_alignParentEnd="true"
+        android:hint="@string/dicaTelefonePassageiro"
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+    <TextView
+        android:id="@+id/faculdadeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="267dp"
+        android:text="@string/faculdade"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+    <Spinner
+        android:id="@+id/faculdadeSpinner"
+        android:layout_width="239dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/faculdadeTextView"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/confirmarbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="76dp"
+        android:text="@string/confirmar" />
+</RelativeLayout>

@@ -41,4 +41,8 @@
     <string name="manha">Manhã</string>
     <string name="tarde">Tarde</string>
     <string name="noite">Noite</string>
+
+    //Cadastrar Passageiro
+    <string name="dicaTelefonePassageiro">Insira o telefone do passageiro</string>
+    <string name="faculdade">Faculdade: </string>
 </resources>

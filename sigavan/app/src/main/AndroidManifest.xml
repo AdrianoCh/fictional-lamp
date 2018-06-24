@@ -22,7 +22,8 @@
         </activity>
         <activity android:name=".PassageiroActivity" />
         <activity android:name=".MotoristaActivity" />
-        <activity android:name=".CadastrarFaculdadeActivity"></activity>
+        <activity android:name=".CadastrarFaculdadeActivity" />
+        <activity android:name=".CadastrarPassageiroActivity"></activity>
     </application>
 
 </manifest>
