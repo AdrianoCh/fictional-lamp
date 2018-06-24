@@ -55,6 +55,8 @@
         android:layout_alignStart="@id/tvUsername"
         android:hint="@string/hintTelefone"
         android:layout_marginTop="20dp"
+        android:inputType="phone"
+        android:maxLength="11"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <RadioGroup
@@ -63,9 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvTelefone"
         android:layout_marginTop="60dp"
-        android:layout_centerHorizontal="true"
-
-        >
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:layout_width="wrap_content"
@@ -90,20 +90,12 @@
     </RadioGroup>
 
     <Button
+        android:id="@+id/btnConfirmar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/confirmar"
         android:layout_below="@id/rgMododeUso"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="80dp"
-        android:layout_marginStart="70dp"/>
+        android:layout_marginTop="60dp"
+        android:layout_centerHorizontal="true"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cancelar"
-        android:layout_below="@id/rgMododeUso"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="70dp"/>
 </RelativeLayout>
