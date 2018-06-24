@@ -1,167 +1,122 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp" >
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
         android:id="@+id/textoPrincipal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp"
-        android:gravity="center"
         android:text="@string/sobreVoce"
-        android:textSize="22dp" />
+        android:textAlignment="center"
+        android:layout_marginTop="100dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        />
 
     <TextView
         android:id="@+id/nomeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textoPrincipal"
-        android:layout_marginTop="88dp"
+        android:layout_below="@id/textoPrincipal"
         android:text="@string/nome"
-        android:textSize="20dp" />
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="70dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <TextView
         android:id="@+id/nomeUsuarioTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/nomeTextView"
-        android:layout_marginStart="115dp"
-        android:textSize="20dp" />
-
+        android:textAlignment="center"
+        android:layout_below="@id/textoPrincipal"
+        android:layout_marginTop="70dp"
+        android:layout_toEndOf="@id/nomeTextView"
+        android:layout_marginStart="40dp"
+        android:hint="@string/placeholder"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <TextView
+        android:id="@+id/tvTelefone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textoPrincipal"
-        android:layout_marginTop="127dp"
+        android:layout_below="@id/nomeTextView"
         android:text="@string/telefone"
-        android:textSize="20dp" />
+        android:layout_alignStart="@id/nomeTextView"
+        android:layout_marginTop="30dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        />
 
     <EditText
         android:id="@+id/telefoneEditText"
-        android:layout_width="264dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textoPrincipal"
-        android:layout_below="@+id/nomeTextView"
-        android:gravity="center"
+        android:textAlignment="center"
+        android:layout_below="@id/nomeTextView"
+        android:layout_toEndOf="@id/tvTelefone"
+        android:layout_alignStart="@id/nomeUsuarioTextView"
         android:hint="@string/dicaTelefone"
-        android:inputType="phone"
-        android:textSize="20dp" />
-
-    <CheckBox
-        android:id="@+id/domingoCheckbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/confirmarButton"
-        android:text="@string/domingo" />
-
-    <CheckBox
-        android:id="@+id/segundaCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="189dp"
-        android:text="@string/segunda" />
-
-    <CheckBox
-        android:id="@+id/tercaCheckbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/cancelarButton"
-        android:layout_alignTop="@+id/segundaCheckBox"
-        android:text="@string/terca" />
-
-    <CheckBox
-        android:id="@+id/quartaCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/confirmarButton"
-        android:layout_alignTop="@+id/segundaCheckBox"
-        android:text="@string/quarta" />
-
-    <CheckBox
-        android:id="@+id/quintaCheckbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/segundaCheckBox"
-        android:layout_marginEnd="26dp"
-        android:text="@string/quinta" />
-
-    <CheckBox
-        android:id="@+id/sextaCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="97dp"
-        android:text="@string/sexta" />
-
-    <CheckBox
-        android:id="@+id/sabadoCheckbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textoPrincipal"
-        android:layout_centerVertical="true"
-        android:text="@string/sabado" />
+        android:layout_marginTop="20dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <RadioGroup
         android:id="@+id/modoDeUsoRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="112dp">
+        android:layout_below="@id/tvTelefone"
+        android:layout_marginTop="60dp"
+        android:layout_centerHorizontal="true" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_gravity="center"
             android:text="@string/modoUso"
-            android:textSize="20dp" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
 
         <RadioButton
             android:id="@+id/Motorista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/motorista"
-            android:textSize="17dp" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
         <RadioButton
             android:id="@+id/Passageiro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/passageiro"
-            android:textSize="17dp" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
     </RadioGroup>
 
     <Button
-        android:id="@+id/confirmarButton"
-        android:layout_width="169dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textoPrincipal"
-        android:layout_alignTop="@+id/cancelarButton"
         android:text="@string/confirmar"
-        android:textSize="20dp" />
-
-    <Button
-        android:id="@+id/cancelarButton"
-        android:layout_width="171dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textoPrincipal"
-        android:layout_marginBottom="42dp"
-        android:text="@string/Cancelar"
-        android:textSize="20dp" />
+        android:layout_below="@id/modoDeUsoRadioGroup"
+        android:layout_marginTop="60dp"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
+
+<!--
+
+    android:id="@+id/intro"
+
+
+
+<TextView
+    android:id="@+id/tvUsername"
+
+
+
+
+<EditText
+    android:id="@+id/edtTelefone"
+
+
+
+
+<Button
+
+
+</RelativeLayout>
+-->

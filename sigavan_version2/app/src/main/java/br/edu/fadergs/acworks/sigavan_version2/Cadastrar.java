@@ -12,6 +12,7 @@ public class Cadastrar extends AppCompatActivity {
     String username;
     TextView tvUsername;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,5 +26,9 @@ public class Cadastrar extends AppCompatActivity {
 
         tvUsername = (TextView) findViewById(R.id.tvUsername);
         tvUsername.setText(username);
+
+        //Todo validação de empty telefone e radiobutton
     }
+
+
 }

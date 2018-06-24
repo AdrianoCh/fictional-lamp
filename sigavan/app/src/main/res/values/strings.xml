@@ -12,6 +12,7 @@
     <string name="Cancelar">Cancelar</string>
     <string name="telefone">Telefone: </string>
     <string name="dicaTelefone">Insira seu telefone</string>
+    <string name="placeholder">placeholder</string>
 
     //FULLSCREEN ACTIVITY
     <string name="title_activity_fullscreen">FullscreenActivity</string>
