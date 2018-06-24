@@ -55,6 +55,8 @@
         android:layout_alignStart="@id/tvUsername"
         android:hint="@string/hintTelefone"
         android:layout_marginTop="20dp"
+        android:inputType="phone"
+        android:maxLength="11"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <RadioGroup
@@ -88,6 +90,7 @@
     </RadioGroup>
 
     <Button
+        android:id="@+id/btnConfirmar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/confirmar"

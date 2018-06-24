@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -29,26 +30,43 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthStateListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthStateListener != null) {
+            mAuth.removeAuthStateListener(mAuthStateListener);
+            FirebaseAuth.getInstance().signOut();
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Login intent
-        final List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build(),
-                new AuthUI.IdpConfig.GoogleBuilder().build());
 
         mAuth = FirebaseAuth.getInstance();
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user =  firebaseAuth.getCurrentUser();
+
                 if (user != null) {
                     // User is signed in
                     Log.d("Login","onAuthStateChanged:signed_in:" + user.getUid());
+                    System.out.println("Usuario Logado");
                 } else {
+                    // Login intent
+                    List<AuthUI.IdpConfig> providers = Arrays.asList(
+                    new AuthUI.IdpConfig.EmailBuilder().build(),
+                    new AuthUI.IdpConfig.GoogleBuilder().build());
                     // User is signed out
                     // Launch Sign-in intent
                     startActivityForResult(
@@ -112,8 +130,10 @@ public class MainActivity extends AppCompatActivity {
                                 System.out.println("Logado e já cadastrado!");
                             if((emailLogado.equals(emailbanco)) && (pup.getModoDeUso().equals(R.string.motorista))) {
                                 System.out.println("Motorista logado");
+                                // TODO Intent -> MotoristaActivity
                             } else if ((emailLogado.equals(emailbanco)) && (pup.getModoDeUso().equals(R.string.passageiro))) {
                                 System.out.println("Passageiro logado");
+                                // TODO Intent -> PassageiroActivity
                             }
                         }
                     }
@@ -135,4 +155,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }
