@@ -32,4 +32,13 @@
 
     //Splash Acitivty
     <string name="icone">Ícone do Aplicativo</string>
+    <string name="title_activity_motorista">MotoristaActivity</string>
+
+    //Cadastrar Faculdade
+    <string name="cadastrar_faculdade">Cadastrar Faculdade</string>
+    <string name="dica_faculdade">Nome da Faculdade</string>
+    <string name="turno">Turno</string>
+    <string name="manha">Manhã</string>
+    <string name="tarde">Tarde</string>
+    <string name="noite">Noite</string>
 </resources>
