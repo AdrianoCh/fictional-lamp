@@ -191,9 +191,12 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("NÃO É A PRIMEIRA VEZ");
                     //TODO: LEVAR PARA ACTIVITY DE USUARIO JA CADASTRADO
                 }
+
                 if((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Motorista"))){
                     //TODO: Levar PARA ACTIVITY DE MOTORISTA
                     System.out.println("MOTORISTA");
+                    Intent myIntent = new Intent(MainActivity.this, MotoristaActivity.class);
+                    startActivity(myIntent);
                 } else if((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Passageiro"))){
                     //TODO: LEVAR PARA ACTIVITY DE PASSAGEIRO
                     System.out.println("PASSAGEIRO");

@@ -10,11 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.FullVan">
         <activity android:name=".MainActivity" />
-
         <activity
             android:name=".SplashScreen"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,6 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".PassageiroActivity" />
+        <activity android:name=".MotoristaActivity" />
+        <activity android:name=".CadastrarFaculdadeActivity"></activity>
     </application>
 
 </manifest>
