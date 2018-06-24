@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name">sigavan_2</string>
+    <string name="placeholder">placeholder</string>
+    // Loading Screen
     <string name="icone">Icone do Aplicativo</string>
+
+    // Activity_Cadastrar
+    <string name="intro">Vamos Falar Sobre Você!</string>
+    <string name="nome">Nome:</string>
+    <string name="telefone">Telefone:</string>
+    <string name="hintTelefone">Insira seu telefone:</string>
+    <string name="modoUso">Modo de Uso:</string>
+    <string name="motorista">Motorista</string>
+    <string name="passageiro">Passageiro</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="cancelar">Cancelar</string>
+
+
 </resources>

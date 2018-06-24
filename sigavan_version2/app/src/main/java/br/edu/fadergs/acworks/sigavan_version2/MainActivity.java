@@ -15,6 +15,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 123;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,16 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                username = user.getDisplayName();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("username", username);
+
+                Intent intent = new Intent(MainActivity.this, Cadastrar.class);
+                intent.putExtras(bundle);
+
+                startActivity(intent);
+                finish();
                 // ...
             } else {
                 // Sign in failed. If response is null the user canceled the
