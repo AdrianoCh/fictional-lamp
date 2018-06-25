@@ -130,10 +130,10 @@ public class MainActivity extends AppCompatActivity {
                                 System.out.println("Logado e já cadastrado!");
                             if((emailLogado.equals(emailbanco)) && (pup.getModoDeUso().equals(R.string.motorista))) {
                                 System.out.println("Motorista logado");
-                                // TODO Intent -> MotoristaActivity
+
                             } else if ((emailLogado.equals(emailbanco)) && (pup.getModoDeUso().equals(R.string.passageiro))) {
                                 System.out.println("Passageiro logado");
-                                // TODO Intent -> PassageiroActivity
+
                             }
                         }
                     }
