@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private ChildEventListener mChildEventListener;
-    FirebaseUser emailCurrentFirebaseUser;
     private Button confirmarButton;
     private Button cancelarButton;
     private EditText telefoneEditText;
@@ -71,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseDataBase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        emailCurrentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mDataDatabaseReference = mFirebaseDataBase.getReference().child("users");
 
         confirmarButton.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
 
                 RadioButton radioButton = (RadioButton) findViewById(modoDeUsoSelecionado);
 
+                FirebaseUser emailCurrentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                String email = emailCurrentFirebaseUser.getEmail();
+
+                /*
                 if ((telefoneEditText.length() != 11) || (radioButton == null)) {
                     Toast.makeText(MainActivity.this, R.string.errocadastro, Toast.LENGTH_LONG).show();
                     validation = false;
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     textoModoDeUso = (String) radioButton.getText();
                     validation = true;
                 }
-
+*/
 /*
                 Boolean domingoSelecionado = false;
                 Boolean segundaSelecionado = false;
@@ -123,46 +125,48 @@ public class MainActivity extends AppCompatActivity {
                     sabadoSelecionado = true;
                 }
 */
-                if(validation) {
-                    String email = emailCurrentFirebaseUser.getEmail();
-                    if (textoModoDeUso.equals(R.string.motorista)) {
-                        PerfilUsuarioMotorista perfilUsuarioMotorista = new PerfilUsuarioMotorista(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
-                        mDataDatabaseReference.push().setValue(perfilUsuarioMotorista);
-                        Toast.makeText(MainActivity.this,"Motorista cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
-                        //TODO Intent -> MotoristaActivity
-                    } else if (textoModoDeUso.equals(R.string.passageiro)){
-                        PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email, "NC", null, null, null, null, null, null, null);
-                        perfilUsuarioPassageiro.setUid(UUID.randomUUID().toString());
-                        mDataDatabaseReference.child(perfilUsuarioPassageiro.getUid()).setValue(perfilUsuarioPassageiro);
-                        Toast.makeText(MainActivity.this,"Passageiro cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
-                        //TODO Intent -> PassageiroActivity
-                    }
+                if (textoModoDeUso.equals("Motorista")) {
+                    PerfilUsuarioMotorista perfilUsuarioMotorista = new PerfilUsuarioMotorista(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
+                    mDataDatabaseReference.push().setValue(perfilUsuarioMotorista);
+                    Toast.makeText(MainActivity.this, "Motorista cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
+                    //TODO Intent -> MotoristaActivity
+                } else if (textoModoDeUso.equals("Passageiro")) {
+                    PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email, "NC", null, null, null, null, null, null, null);
+                    perfilUsuarioPassageiro.setUid(UUID.randomUUID().toString());
+                    mDataDatabaseReference.child(perfilUsuarioPassageiro.getUid()).setValue(perfilUsuarioPassageiro);
+                    Toast.makeText(MainActivity.this, "Passageiro cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
+                    //TODO Intent -> PassageiroActivity
                 }
             }
-        });
+        }
+    });
 
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    onSignedInInitialize(user.getDisplayName());
-                } else {
-                    onSignedOutCleanUp();
-                    startActivityForResult(
-                            AuthUI.getInstance()
-                                    .createSignInIntentBuilder()
-                                    .setIsSmartLockEnabled(false)
-                                    .setProviders(
-                                            AuthUI.GOOGLE_PROVIDER,
-                                            AuthUI.EMAIL_PROVIDER)
-                                    .build(),
-                            RC_SIGN_IN);
-                }
-            }
-        };
+    mAuthStateListener =new FirebaseAuth.AuthStateListener()
 
+    {
+        @Override
+        public void onAuthStateChanged (@NonNull FirebaseAuth firebaseAuth){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            onSignedInInitialize(user.getDisplayName());
+        } else {
+            onSignedOutCleanUp();
+            startActivityForResult(
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setIsSmartLockEnabled(false)
+                            .setProviders(
+                                    AuthUI.GOOGLE_PROVIDER,
+                                    AuthUI.EMAIL_PROVIDER)
+                            .build(),
+                    RC_SIGN_IN);
+        }
     }
+    }
+
+    ;
+
+}
 
     @Override
     protected void onPause() {
@@ -190,31 +194,53 @@ public class MainActivity extends AppCompatActivity {
 
                 FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 // Guarda o email autenticado para comparações
-                String email = currentFirebaseUser.getEmail();
+                String email = currentFirebaseUser.getEmail().toString();
 
                 // Pega o valor do email no banco
                 String emailBanco = dataSnapshot.child("email").getValue().toString();
 
-                if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals(R.string.motorista))) {
+                // Verifica se existe a variavel primeirologin
+                Boolean primeiroLogin = perfilUsuarioPassageiro.getPrimeiroLogin();
+
+                if ((primeiroLogin == false) && (email.equals(emailBanco))) {
+                    //TODO: MANTER NA ACTIVITY DE CADASTRO
+                    System.out.println("É PRIMEIRA VEZ");
+                } else {
+                    System.out.println("NÃO É A PRIMEIRA VEZ");
+                    //TODO: LEVAR PARA ACTIVITY DE USUARIO JA CADASTRADO
+                }
+                if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Motorista"))) {
+                    //TODO: Levar PARA ACTIVITY DE MOTORISTA
+                    System.out.println("MOTORISTA");
                     Intent myIntent = new Intent(MainActivity.this, MotoristaActivity.class);
                     startActivity(myIntent);
                 } else if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals(R.string.passageiro))) {
+                    //TODO: LEVAR PARA ACTIVITY DE PASSAGEIRO
                     Intent myIntent = new Intent(MainActivity.this, PassageiroActivity.class);
                     startActivity(myIntent);
+
                 }
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
         //mDataDatabaseReference.addChildEventListener(mChildEventListener);
     }
 
-    public void onSignedOutCleanUp() {}
+    public void onSignedOutCleanUp() {
+    }
 }
