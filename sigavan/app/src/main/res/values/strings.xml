@@ -50,4 +50,7 @@
     <string name="sim">SIM</string>
     <string name="nao">NÃO</string>
     <string name="dialog_mensagem">Gostaria continuar adicionando passageiros?</string>
+
+    //Completar Cadastro Passageiro
+    <string name="completar_cadastro">Selecione os Dias da Semana Que Você Tem Aula</string>
 </resources>
