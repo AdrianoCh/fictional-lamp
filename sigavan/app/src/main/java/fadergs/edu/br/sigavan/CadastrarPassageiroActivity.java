@@ -1,5 +1,7 @@
 package fadergs.edu.br.sigavan;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -47,17 +49,17 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
         mFirebaseDataBase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-            faculdadeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                    Object item = parent.getItemAtPosition(pos);
-                   String selecionado = item.toString();
-                    System.out.println("A SELEÇÃO FOI: " + selecionado);
-                    //TODO: PASSAR VALOR COLETADO DO SPINNER PARA O BANCO, LINHA 88
-                }
+        faculdadeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                Object item = parent.getItemAtPosition(pos);
+                String selecionado = item.toString();
+                System.out.println("A SELEÇÃO FOI: " + selecionado);
+                //TODO: PASSAR VALOR COLETADO DO SPINNER PARA O BANCO, LINHA 88
+            }
 
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
         emailRef.orderByValue().addChildEventListener(new ChildEventListener() {
@@ -68,7 +70,7 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
 
                 String emailBanco = dataSnapshot.child("email").getValue().toString();
 
-                if(email.equals(emailBanco)){
+                if (email.equals(emailBanco)) {
                     popularSpinner();
 
                     confirmarButton.setOnClickListener(new View.OnClickListener() {
@@ -81,15 +83,13 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                    for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+                                    for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
                                         String passageiroKey = childSnapshot.getKey();
                                         System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
 
                                         String faculdadeSelecionada = (String) faculdadeSpinner.getSelectedItem();
                                         System.out.println("VALOR SELECIONADO ANTES DE SALVAR : " + faculdadeSelecionada);
                                         String[] faculdadeSeparada = faculdadeSelecionada.split("=");
-
-
 
                                         emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0]).child("motorista").setValue(email);
                                         emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0]).child("turno").setValue(faculdadeSeparada[1]);
@@ -105,15 +105,19 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
                     });
                 }
             }
+
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             }
+
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
             }
+
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -121,44 +125,44 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
     }
 
 
-public void popularSpinner(){
-    mDataDatabaseReference = mFirebaseDataBase.getReference().child("users");
-    mDataDatabaseReference.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
+    public void popularSpinner() {
+        mDataDatabaseReference = mFirebaseDataBase.getReference().child("users");
+        mDataDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-            final List<String> faculdades = new ArrayList<String>();
+                final List<String> faculdades = new ArrayList<String>();
 
 
-            for (DataSnapshot faculdadesSnapshot: dataSnapshot.getChildren()) {
-                Object nomeFsculdade = faculdadesSnapshot.child("faculdades").getValue();
-                String modificado = "";
-                if (nomeFsculdade == null){
-                    System.out.println("É NULL");
-                } else {
-                    String nome = nomeFsculdade.toString();
-                    String[] separado = nome.split(",");
-                    for (String item : separado) {
-                        if(item.contains("{")){
-                            modificado = item.replaceAll("\\{","");
-                            faculdades.add(modificado);
-                        }
-                       else if(item.contains("}")) {
-                            modificado = item.replaceAll("\\}", "");
-                            faculdades.add(modificado);
-                        } else {
-                            faculdades.add(item);
+                for (DataSnapshot faculdadesSnapshot : dataSnapshot.getChildren()) {
+                    Object nomeFsculdade = faculdadesSnapshot.child("faculdades").getValue();
+                    String modificado = "";
+                    if (nomeFsculdade == null) {
+                        System.out.println("É NULL");
+                    } else {
+                        String nome = nomeFsculdade.toString();
+                        String[] separado = nome.split(",");
+                        for (String item : separado) {
+                            if (item.contains("{")) {
+                                modificado = item.replaceAll("\\{", "");
+                                faculdades.add(modificado);
+                            } else if (item.contains("}")) {
+                                modificado = item.replaceAll("\\}", "");
+                                faculdades.add(modificado);
+                            } else {
+                                faculdades.add(item);
+                            }
                         }
                     }
                 }
+                ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(CadastrarPassageiroActivity.this, android.R.layout.simple_spinner_item, faculdades);
+                areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                faculdadeSpinner.setAdapter(areasAdapter);
             }
-            ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(CadastrarPassageiroActivity.this, android.R.layout.simple_spinner_item, faculdades);
-            areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            faculdadeSpinner.setAdapter(areasAdapter);
-        }
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-        }
-    });
-}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
 }
