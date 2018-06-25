@@ -64,7 +64,7 @@ public class PassageiroActivity extends AppCompatActivity {
                 RadioButton radioButton = (RadioButton) findViewById(presencaSelecionada);
                 String textoPresenca = (String) radioButton.getText();
                 //TODO: TENNTAR COLOCAR VALOR NO PRESENÇA
-                mDataDatabaseReference.push().setValue("OLA");
+                //mDataDatabaseReference.push().setValue("OLA");
 
             }
         });
