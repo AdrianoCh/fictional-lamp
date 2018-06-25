@@ -39,13 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView nomeUsuarioTextView;
     private String textoModoDeUso;
     private boolean validation;
- /* private CheckBox domingoChecbox;
-    private CheckBox segundaCheckbox;
-    private CheckBox tercaChecbox;
-    private CheckBox quartaCheckbox;
-    private CheckBox quintaCheckbox;
-    private CheckBox sextaCheckbox;
-    private CheckBox sabadoCheckbox; */
 
     private String perfilUsuarioRegistrado;
 
@@ -58,14 +51,6 @@ public class MainActivity extends AppCompatActivity {
         telefoneEditText = (EditText) findViewById(R.id.telefoneEditText);
         modoDeUsoRadioGroup = (RadioGroup) findViewById(R.id.modoDeUsoRadioGroup);
         nomeUsuarioTextView = (TextView) findViewById(R.id.nomeUsuarioTextView);
-        //domingoChecbox = (CheckBox) findViewById(R.id.domingoCheckbox);
-        //segundaCheckbox = (CheckBox) findViewById(R.id.segundaCheckBox);
-        //tercaChecbox = (CheckBox) findViewById(R.id.tercaCheckbox);
-        //quartaCheckbox = (CheckBox) findViewById(R.id.quartaCheckBox);
-        //quintaCheckbox = (CheckBox) findViewById(R.id.quintaCheckbox);
-        //sextaCheckbox = (CheckBox) findViewById(R.id.sextaCheckBox);
-        //sabadoCheckbox = (CheckBox) findViewById(R.id.sabadoCheckbox);
-        //TODO: PASSA CHECKBOX PARA CADASTRAR ALUNO
 
         mFirebaseDataBase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -138,35 +123,34 @@ public class MainActivity extends AppCompatActivity {
                     //TODO Intent -> PassageiroActivity
                 }
             }
+        });
+
+        mAuthStateListener = new FirebaseAuth.AuthStateListener()
+
+        {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    onSignedInInitialize(user.getDisplayName());
+                } else {
+                    onSignedOutCleanUp();
+                    startActivityForResult(
+                            AuthUI.getInstance()
+                                    .createSignInIntentBuilder()
+                                    .setIsSmartLockEnabled(false)
+                                    .setProviders(
+                                            AuthUI.GOOGLE_PROVIDER,
+                                            AuthUI.EMAIL_PROVIDER)
+                                    .build(),
+                            RC_SIGN_IN);
+                }
+            }
         }
-    });
 
-    mAuthStateListener =new FirebaseAuth.AuthStateListener()
+        ;
 
-    {
-        @Override
-        public void onAuthStateChanged (@NonNull FirebaseAuth firebaseAuth){
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null) {
-            onSignedInInitialize(user.getDisplayName());
-        } else {
-            onSignedOutCleanUp();
-            startActivityForResult(
-                    AuthUI.getInstance()
-                            .createSignInIntentBuilder()
-                            .setIsSmartLockEnabled(false)
-                            .setProviders(
-                                    AuthUI.GOOGLE_PROVIDER,
-                                    AuthUI.EMAIL_PROVIDER)
-                            .build(),
-                    RC_SIGN_IN);
-        }
     }
-    }
-
-    ;
-
-}
 
     @Override
     protected void onPause() {
