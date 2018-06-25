@@ -67,16 +67,32 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser emailCurrentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 String email = emailCurrentFirebaseUser.getEmail();
 
-                /*
-                if ((telefoneEditText.length() != 11) || (radioButton == null)) {
+                String edttelefone = telefoneEditText.getText().toString();
+                int tamanhotelefone = edttelefone.length();
+
+                if ((tamanhotelefone != 11) || (radioButton == null)) {
                     Toast.makeText(MainActivity.this, R.string.errocadastro, Toast.LENGTH_LONG).show();
-                    validation = false;
                 } else {
                     textoModoDeUso = (String) radioButton.getText();
                     validation = true;
+
+                    if (textoModoDeUso.equals("Motorista")) {
+                        PerfilUsuarioMotorista perfilUsuarioMotorista = new PerfilUsuarioMotorista(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
+                        mDataDatabaseReference.push().setValue(perfilUsuarioMotorista);
+                        Toast.makeText(MainActivity.this, "Motorista cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
+                        //TODO Intent -> MotoristaActivity
+                    } else if (textoModoDeUso.equals("Passageiro")) {
+                        PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email, "NC", null, null, null, null, null, null, null);
+                        perfilUsuarioPassageiro.setUid(UUID.randomUUID().toString());
+                        mDataDatabaseReference.child(perfilUsuarioPassageiro.getUid()).setValue(perfilUsuarioPassageiro);
+                        Toast.makeText(MainActivity.this, "Passageiro cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
+                        //TODO Intent -> PassageiroActivity
+                    }
                 }
-*/
-/*
+            }
+        });
+
+        /*
                 Boolean domingoSelecionado = false;
                 Boolean segundaSelecionado = false;
                 Boolean tercaSelecionado = false;
@@ -110,17 +126,26 @@ public class MainActivity extends AppCompatActivity {
                     sabadoSelecionado = true;
                 }
 */
-                if (textoModoDeUso.equals("Motorista")) {
-                    PerfilUsuarioMotorista perfilUsuarioMotorista = new PerfilUsuarioMotorista(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
-                    mDataDatabaseReference.push().setValue(perfilUsuarioMotorista);
-                    Toast.makeText(MainActivity.this, "Motorista cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
-                    //TODO Intent -> MotoristaActivity
-                } else if (textoModoDeUso.equals("Passageiro")) {
-                    PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email, "NC", null, null, null, null, null, null, null);
-                    perfilUsuarioPassageiro.setUid(UUID.randomUUID().toString());
-                    mDataDatabaseReference.child(perfilUsuarioPassageiro.getUid()).setValue(perfilUsuarioPassageiro);
-                    Toast.makeText(MainActivity.this, "Passageiro cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
-                    //TODO Intent -> PassageiroActivity
+
+        mAuthStateListener = new FirebaseAuth.AuthStateListener()
+
+        {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    onSignedInInitialize(user.getDisplayName());
+                } else {
+                    onSignedOutCleanUp();
+                    startActivityForResult(
+                            AuthUI.getInstance()
+                                    .createSignInIntentBuilder()
+                                    .setIsSmartLockEnabled(false)
+                                    .setProviders(
+                                            AuthUI.GOOGLE_PROVIDER,
+                                            AuthUI.EMAIL_PROVIDER)
+                                    .build(),
+                            RC_SIGN_IN);
                 }
             }
         });
