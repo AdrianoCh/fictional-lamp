@@ -50,7 +50,7 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
             faculdadeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     Object item = parent.getItemAtPosition(pos);
-                    String selecionado = item.toString();
+                   String selecionado = item.toString();
                     System.out.println("A SELEÇÃO FOI: " + selecionado);
                     //TODO: PASSAR VALOR COLETADO DO SPINNER PARA O BANCO, LINHA 88
                 }
@@ -64,7 +64,7 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                String email = currentFirebaseUser.getEmail().toString();
+                final String email = currentFirebaseUser.getEmail().toString();
 
                 String emailBanco = dataSnapshot.child("email").getValue().toString();
 
@@ -82,11 +82,17 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                                     for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
-                                        String clubkey = childSnapshot.getKey();
-                                        System.out.println("RESULTADO QUERY COM CHAVE: " + clubkey);
-                                        //System.out.println("SELECIONADO NO FOR" + selecionado);
-                                        emailRef.child(clubkey).child("aulas").child("fadergs").child("motorista").setValue("fulano");
-                                        emailRef.child(clubkey).child("aulas").child("fadergs").child("turno").setValue("noite");
+                                        String passageiroKey = childSnapshot.getKey();
+                                        System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
+
+                                        String faculdadeSelecionada = (String) faculdadeSpinner.getSelectedItem();
+                                        System.out.println("VALOR SELECIONADO ANTES DE SALVAR : " + faculdadeSelecionada);
+                                        String[] faculdadeSeparada = faculdadeSelecionada.split("=");
+
+
+
+                                        emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0]).child("motorista").setValue(email);
+                                        emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0]).child("turno").setValue(faculdadeSeparada[1]);
                                     }
                                 }
 
