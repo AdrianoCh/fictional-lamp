@@ -2,6 +2,8 @@ package fadergs.edu.br.sigavan;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class CadastrarPassageiroActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
@@ -30,7 +31,7 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private ChildEventListener mChildEventListener;
 
-    private EditText telefonePassageiroEditText;
+    private EditText emailPassageiroEditText;
     private Spinner faculdadeSpinner;
     private Button confirmarButton;
 
@@ -39,52 +40,119 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_passageiro);
 
-        telefonePassageiroEditText = (EditText) findViewById(R.id.telefonePassageiroEditText);
+        emailPassageiroEditText = (EditText) findViewById(R.id.emailPassageiroEditText);
         faculdadeSpinner = (Spinner) findViewById(R.id.faculdadeSpinner);
+        confirmarButton = (Button) findViewById(R.id.confirmarbutton);
 
         mFirebaseDataBase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        mDataDatabaseReference = mFirebaseDataBase.getReference().child("users");
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        final Query query = mDataDatabaseReference.child("email");
+            faculdadeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                    Object item = parent.getItemAtPosition(pos);
+                    String selecionado = item.toString();
+                    System.out.println("A SELEÇÃO FOI: " + selecionado);
+                    //TODO: PASSAR VALOR COLETADO DO SPINNER PARA O BANCO, LINHA 88
+                }
 
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //Passar os dados para a interface grafica
-                System.out.println("O RESULTADO FOI" + dataSnapshot.getValue().toString());
-            }
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
 
+        final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
+        emailRef.orderByValue().addChildEventListener(new ChildEventListener() {
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                //Se ocorrer um erro
-            }
-        });
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        mDataDatabaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Is better to use a List, because you don't know the size
-                // of the iterator returned by dataSnapshot.getChildren() to
-                // initialize the array
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 String email = currentFirebaseUser.getEmail().toString();
 
+                String emailBanco = dataSnapshot.child("email").getValue().toString();
 
-                final List<String> areas = new ArrayList<String>();
+                if(email.equals(emailBanco)){
+                    popularSpinner();
 
-                for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
-                    String areaName = areaSnapshot.child("email").getValue(String.class);
-                    areas.add(areaName);
+                    confirmarButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String emailPassageiro = emailPassageiroEditText.getText().toString();
+
+                            Query query1 = emailRef.orderByChild("email").equalTo(emailPassageiro).limitToFirst(1);
+                            query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                    for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+                                        String clubkey = childSnapshot.getKey();
+                                        System.out.println("RESULTADO QUERY COM CHAVE: " + clubkey);
+                                        //System.out.println("SELECIONADO NO FOR" + selecionado);
+                                        emailRef.child(clubkey).child("aulas").child("fadergs").child("motorista").setValue("fulano");
+                                        emailRef.child(clubkey).child("aulas").child("fadergs").child("turno").setValue("noite");
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    //Se ocorrer um erro
+                                }
+                            });
+                        }
+                    });
                 }
-                ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(CadastrarPassageiroActivity.this, android.R.layout.simple_spinner_item, areas);
-                areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                faculdadeSpinner.setAdapter(areasAdapter);
+            }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
     }
+
+
+public void popularSpinner(){
+    mDataDatabaseReference = mFirebaseDataBase.getReference().child("users");
+    mDataDatabaseReference.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            final List<String> faculdades = new ArrayList<String>();
+
+
+            for (DataSnapshot faculdadesSnapshot: dataSnapshot.getChildren()) {
+                Object nomeFsculdade = faculdadesSnapshot.child("faculdades").getValue();
+                String modificado = "";
+                if (nomeFsculdade == null){
+                    System.out.println("É NULL");
+                } else {
+                    String nome = nomeFsculdade.toString();
+                    String[] separado = nome.split(",");
+                    for (String item : separado) {
+                        if(item.contains("{")){
+                            modificado = item.replaceAll("\\{","");
+                            faculdades.add(modificado);
+                        }
+                       else if(item.contains("}")) {
+                            modificado = item.replaceAll("\\}", "");
+                            faculdades.add(modificado);
+                        } else {
+                            faculdades.add(item);
+                        }
+                    }
+                }
+            }
+            ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(CadastrarPassageiroActivity.this, android.R.layout.simple_spinner_item, faculdades);
+            areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            faculdadeSpinner.setAdapter(areasAdapter);
+        }
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+        }
+    });
+}
 }

@@ -13,22 +13,22 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <TextView
-        android:id="@+id/tvTelefone"
+        android:id="@+id/emailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="191dp"
-        android:text="@string/telefone"
+        android:text="@string/email"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <EditText
-        android:id="@+id/telefonePassageiroEditText"
+        android:id="@+id/emailPassageiroEditText"
         android:layout_width="279dp"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvTelefone"
+        android:layout_alignBaseline="@+id/emailTextView"
         android:layout_alignParentEnd="true"
-        android:hint="@string/dicaTelefonePassageiro"
+        android:hint="@string/dicaEmailPassageiro"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 

@@ -43,6 +43,7 @@
     <string name="noite">Noite</string>
 
     //Cadastrar Passageiro
-    <string name="dicaTelefonePassageiro">Insira o telefone do passageiro</string>
+    <string name="dicaEmailPassageiro">Insira o email do passageiro</string>
     <string name="faculdade">Faculdade: </string>
+    <string name="email">Email: </string>
 </resources>

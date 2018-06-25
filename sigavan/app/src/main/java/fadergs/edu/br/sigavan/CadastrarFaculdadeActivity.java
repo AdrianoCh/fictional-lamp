@@ -74,8 +74,9 @@ public void salvarBanco(final String nome, final String turno){
             String emailBanco = dataSnapshot.child("email").getValue().toString();
 
             if(email.equals(emailBanco)){
-                mDataDatabaseReference.child(chave).child("faculdades").child(nome).child("nome").setValue(nome);
-                mDataDatabaseReference.child(chave).child("faculdades").child(nome).child("turno").setValue(turno);
+                //mDataDatabaseReference.child(chave).child("faculdades").child(nome).setValue(nome);
+                mDataDatabaseReference.child(chave).child("faculdades").child(nome).setValue(turno);
+
             }
 
         }
