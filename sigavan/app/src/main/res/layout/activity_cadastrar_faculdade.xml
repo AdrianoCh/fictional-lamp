@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/nomeFaculdadeEditText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="60dp">
 
         <TextView
             android:id="@+id/turnoFaculdadeTextView"
