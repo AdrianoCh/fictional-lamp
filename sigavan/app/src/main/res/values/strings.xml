@@ -13,6 +13,7 @@
     <string name="telefone">Telefone: </string>
     <string name="dicaTelefone">Insira seu telefone</string>
     <string name="placeholder">placeholder</string>
+    <string name="errocadastro">Dados preenchidos corretamente. Por favor, preencha o número de telefone e o modo de uso corretamente.</string>
 
     //FULLSCREEN ACTIVITY
     <string name="title_activity_fullscreen">FullscreenActivity</string>
@@ -46,4 +47,7 @@
     <string name="dicaEmailPassageiro">Insira o email do passageiro</string>
     <string name="faculdade">Faculdade: </string>
     <string name="email">Email: </string>
+    <string name="sim">SIM</string>
+    <string name="nao">NÃO</string>
+    <string name="dialog_mensagem">Gostaria continuar adicionando passageiros?</string>
 </resources>
