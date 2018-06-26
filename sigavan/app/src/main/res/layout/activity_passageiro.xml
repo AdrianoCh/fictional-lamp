@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp" >
+    android:layout_height="match_parent">
 
     <TextView
         android:layout_width="match_parent"
@@ -13,8 +11,7 @@
         android:layout_marginTop="41dp"
         android:gravity="center"
         android:text="@string/app_name"
-        android:textSize="22dp"
-        />
+        android:textSize="22dp" />
 
     <TextView
         android:id="@+id/mensagemTextView"

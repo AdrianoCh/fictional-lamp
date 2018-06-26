@@ -38,13 +38,15 @@ public class MainActivity extends AppCompatActivity {
     private EditText telefoneEditText;
     private RadioGroup modoDeUsoRadioGroup;
     private TextView nomeUsuarioTextView;
-    private CheckBox domingoChecbox;
+    private String textoModoDeUso;
+    private boolean validation;
+ /* private CheckBox domingoChecbox;
     private CheckBox segundaCheckbox;
     private CheckBox tercaChecbox;
     private CheckBox quartaCheckbox;
     private CheckBox quintaCheckbox;
     private CheckBox sextaCheckbox;
-    private CheckBox sabadoCheckbox;
+    private CheckBox sabadoCheckbox; */
 
     private String perfilUsuarioRegistrado;
 
@@ -79,11 +81,20 @@ public class MainActivity extends AppCompatActivity {
                 int modoDeUsoSelecionado = modoDeUsoRadioGroup.getCheckedRadioButtonId();
 
                 RadioButton radioButton = (RadioButton) findViewById(modoDeUsoSelecionado);
-                String textoModoDeUso = (String) radioButton.getText();
 
-                FirebaseUser emailCurrentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+
+                FirebaseUser emailCurrentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 String email = emailCurrentFirebaseUser.getEmail();
 
+                if ((telefoneEditText.length() != 11) || (radioButton == null)) {
+                    Toast.makeText(MainActivity.this, R.string.errocadastro, Toast.LENGTH_LONG).show();
+                    validation = false;
+                } else {
+                    textoModoDeUso = (String) radioButton.getText();
+                    validation = true;
+                }
+
+/*
                 Boolean domingoSelecionado = false;
                 Boolean segundaSelecionado = false;
                 Boolean tercaSelecionado = false;
@@ -116,49 +127,51 @@ public class MainActivity extends AppCompatActivity {
                 if(sabadoCheckbox.isChecked()){
                     sabadoSelecionado = true;
                 }
+*/
 
-                if(textoModoDeUso == "Motorista"){
+
+                if (textoModoDeUso == "Motorista") {
                     PerfilUsuarioMotorista perfilUsuarioMotorista = new PerfilUsuarioMotorista(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
                     mDataDatabaseReference.push().setValue(perfilUsuarioMotorista);
                 } else {
-                    PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email, "NC", domingoSelecionado, segundaSelecionado, tercaSelecionado, quartaSelecionado, quintaSelecionado, sextaSelecionado, sabadoSelecionado);
+                    PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email, "NC", null, null, null, null, null, null, null);
                     perfilUsuarioPassageiro.setUid(UUID.randomUUID().toString());
                     mDataDatabaseReference.child(perfilUsuarioPassageiro.getUid()).setValue(perfilUsuarioPassageiro);
                 }
             }
         });
 
-    mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-        @Override
-        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
-            if (user != null){
-                onSignedInInitialize(user.getDisplayName());
-            } else {
-                onSignedOutCleanUp();
-                startActivityForResult(
-                        AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setIsSmartLockEnabled(false)
-                                .setProviders(
-                                        AuthUI.GOOGLE_PROVIDER,
-                                        AuthUI.EMAIL_PROVIDER)
-                                .build(),
-                        RC_SIGN_IN);
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    onSignedInInitialize(user.getDisplayName());
+                } else {
+                    onSignedOutCleanUp();
+                    startActivityForResult(
+                            AuthUI.getInstance()
+                                    .createSignInIntentBuilder()
+                                    .setIsSmartLockEnabled(false)
+                                    .setProviders(
+                                            AuthUI.GOOGLE_PROVIDER,
+                                            AuthUI.EMAIL_PROVIDER)
+                                    .build(),
+                            RC_SIGN_IN);
+                }
             }
-        }
-    };
+        };
 
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
@@ -184,20 +197,20 @@ public class MainActivity extends AppCompatActivity {
                 Boolean primeiroLogin = perfilUsuarioPassageiro.getPrimeiroLogin();
                 System.out.println(email);
 
-                if((primeiroLogin == false) && (email.equals(emailBanco))){
+                if ((primeiroLogin == false) && (email.equals(emailBanco))) {
                     //TODO: MANTER NA ACTIVITY DE CADASTRO
                     System.out.println("É PRIMEIRA VEZ");
-                }else{
+                } else {
                     System.out.println("NÃO É A PRIMEIRA VEZ");
                     //TODO: LEVAR PARA ACTIVITY DE USUARIO JA CADASTRADO
                 }
 
-                if((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Motorista"))){
+                if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Motorista"))) {
                     //TODO: Levar PARA ACTIVITY DE MOTORISTA
                     System.out.println("MOTORISTA");
                     Intent myIntent = new Intent(MainActivity.this, MotoristaActivity.class);
                     startActivity(myIntent);
-                } else if((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Passageiro"))){
+                } else if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Passageiro"))) {
                     //TODO: LEVAR PARA ACTIVITY DE PASSAGEIRO
                     System.out.println("PASSAGEIRO");
                     Intent myIntent = new Intent(MainActivity.this, PassageiroActivity.class);
