@@ -89,8 +89,5 @@ public class Cadastrar extends AppCompatActivity {
                 }
             }
         });
-
     }
-
-
 }
