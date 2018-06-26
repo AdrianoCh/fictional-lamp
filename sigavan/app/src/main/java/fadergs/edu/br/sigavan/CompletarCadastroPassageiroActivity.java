@@ -115,25 +115,25 @@ public class CompletarCadastroPassageiroActivity extends AppCompatActivity {
                                         System.out.println("TESTE CPNSULTA" + separado[0] + separado[1]);
 
                                         if (domingoChecbox.isChecked()) {
-                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("presenca").child("Domingo").setValue("true");
+                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("diasAula").child("Domingo").setValue("true");
                                         }
                                         if (segundaCheckbox.isChecked()) {
-                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("presenca").child("Segunda").setValue("true");
+                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("diasAula").child("Segunda").setValue("true");
                                         }
                                         if (tercaChecbox.isChecked()) {
-                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("presenca").child("Terca").setValue("true");
+                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("diasAula").child("Terca").setValue("true");
                                         }
                                         if (quartaCheckbox.isChecked()) {
-                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("presenca").child("Quarta").setValue("true");
+                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("diasAula").child("Quarta").setValue("true");
                                         }
                                         if (quintaCheckbox.isChecked()) {
-                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("presenca").child("Quinta").setValue("true");
+                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("diasAula").child("Quinta").setValue("true");
                                         }
                                         if (sextaCheckbox.isChecked()) {
-                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("presenca").child("Sexta").setValue("true");
+                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("diasAula").child("Sexta").setValue("true");
                                         }
                                         if (sabadoCheckbox.isChecked()) {
-                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("presenca").child("Sabado").setValue("true");
+                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("diasAula").child("Sabado").setValue("true");
                                         } else {
                                             Toast.makeText(CompletarCadastroPassageiroActivity.this, "Selecione uma opção", Toast.LENGTH_SHORT).show();
                                         }
