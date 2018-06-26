@@ -89,19 +89,20 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, R.string.errocadastro, Toast.LENGTH_LONG).show();
                 } else {
                     textoModoDeUso = (String) radioButton.getText();
-                    validation = true;
 
                     if (textoModoDeUso.equals("Motorista")) {
                         PerfilUsuarioMotorista perfilUsuarioMotorista = new PerfilUsuarioMotorista(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
                         mDataDatabaseReference.push().setValue(perfilUsuarioMotorista);
                         Toast.makeText(MainActivity.this, "Motorista cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
-                        //TODO Intent -> MotoristaActivity
+                        Intent myIntent = new Intent(MainActivity.this, MotoristaActivity.class);
+                        startActivity(myIntent);
                     } else if (textoModoDeUso.equals("Passageiro")) {
                         PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email, "NC", null, null, null, null, null, null, null);
                         perfilUsuarioPassageiro.setUid(UUID.randomUUID().toString());
                         mDataDatabaseReference.child(perfilUsuarioPassageiro.getUid()).setValue(perfilUsuarioPassageiro);
                         Toast.makeText(MainActivity.this, "Passageiro cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
-                        //TODO Intent -> PassageiroActivity
+                        Intent myIntent = new Intent(MainActivity.this, PassageiroActivity.class);
+                        startActivity(myIntent);
                     }
                 }
             }
