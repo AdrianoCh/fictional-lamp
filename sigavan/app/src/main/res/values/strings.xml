@@ -30,6 +30,8 @@
     <string name="quinta">Quinta</string>
     <string name="sexta">Sexta</string>
     <string name="sabado">Sábado</string>
+    <string name="primeira_parte_mensagem">Presenca atual definida como </string>
+    <string name="segunda_parte_mensagem"> Caso queira alterar a presença, selecione uma opção e confirme</string>
 
     //Splash Acitivty
     <string name="icone">Ícone do Aplicativo</string>

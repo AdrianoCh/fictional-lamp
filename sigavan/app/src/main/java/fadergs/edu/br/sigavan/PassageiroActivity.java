@@ -35,6 +35,7 @@ public class PassageiroActivity extends AppCompatActivity {
     private RadioGroup presencaRadioGroup;
     private TextView mensagemTextView;
     private TextView dataTextView;
+    private TextView informaPresenca;
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseDatabase mFirebaseDataBase;
@@ -51,6 +52,7 @@ public class PassageiroActivity extends AppCompatActivity {
         presencaRadioGroup = (RadioGroup) findViewById(R.id.presencaRadioGroup);
         mensagemTextView = (TextView) findViewById(R.id.mensagemTextView);
         dataTextView = (TextView) findViewById(R.id.dataTextView);
+        informaPresenca = (TextView) findViewById(R.id.informaPresencaTextView);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser usuario = mFirebaseAuth.getCurrentUser();
@@ -59,58 +61,6 @@ public class PassageiroActivity extends AppCompatActivity {
         mDataDatabaseReference = mFirebaseDataBase.getReference().child("users");
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        DatabaseReference usersRef = mFirebaseDataBase.getReference().child("users");
-        usersRef.orderByValue().addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                PerfilUsuarioPassageiro perfilUsuarioPassageiro = dataSnapshot.getValue(PerfilUsuarioPassageiro.class);
-
-                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                String email = currentFirebaseUser.getEmail().toString();
-                String emailBanco = dataSnapshot.child("email").getValue().toString();
-                String primeiroLogin = perfilUsuarioPassageiro.getPrimeiroLogin().toString();
-
-                System.out.println("TESTE ANTES DO IF : " +primeiroLogin);
-
-                if(primeiroLogin.equals("true") && (email.equals(emailBanco))){
-                   Intent myIntent = new Intent(PassageiroActivity.this, CompletarCadastroPassageiroActivity.class);
-                   startActivity(myIntent);
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -120,8 +70,69 @@ public class PassageiroActivity extends AppCompatActivity {
                 int presencaSelecionada = presencaRadioGroup.getCheckedRadioButtonId();
 
                 RadioButton radioButton = (RadioButton) findViewById(presencaSelecionada);
-                String textoPresenca = (String) radioButton.getText();
-                //TODO: TENNTAR COLOCAR VALOR NO PRESENÇA
+                final String textoPresenca = (String) radioButton.getText();
+                DatabaseReference usersRef = mFirebaseDataBase.getReference().child("users");
+                usersRef.orderByValue().addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        PerfilUsuarioPassageiro perfilUsuarioPassageiro = dataSnapshot.getValue(PerfilUsuarioPassageiro.class);
+
+                        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                        final String email = currentFirebaseUser.getEmail().toString();
+                        String emailBanco = dataSnapshot.child("email").getValue().toString();
+                        String primeiroLogin = perfilUsuarioPassageiro.getPrimeiroLogin().toString();
+
+                        System.out.println("TESTE ANTES DO IF : " + primeiroLogin);
+
+                        if (primeiroLogin.equals("true") && (email.equals(emailBanco))) {
+                            Intent myIntent = new Intent(PassageiroActivity.this, CompletarCadastroPassageiroActivity.class);
+                            startActivity(myIntent);
+                        } else {
+                            final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
+                            Query query1 = emailRef.orderByChild("email").equalTo(email).limitToFirst(1);
+                            query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                    for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                        String passageiroKey = childSnapshot.getKey();
+                                        System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
+
+                                        String resultado = dataSnapshot.child(passageiroKey).child("aulas").getValue().toString();
+                                        String separado[] = resultado.split("=");
+                                        String formatado = separado[0].replaceAll("\\{", "").trim();
+
+                                        String data = getTime("dd-MM-yyyy");
+
+                                        emailRef.child(passageiroKey).child("aulas").child(formatado).child("presenca").child(data).setValue(textoPresenca);
+                                        informaPresenca.setText(getString(R.string.primeira_parte_mensagem) + " " + textoPresenca + " " + getString(R.string.segunda_parte_mensagem));
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    //Se ocorrer um erro
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
             }
         });
 
@@ -211,61 +222,6 @@ public class PassageiroActivity extends AppCompatActivity {
                 String email = currentFirebaseUser.getEmail().toString();
                 String emailServidor = dataSnapshot.child("email").getValue().toString();
 
-            /*
-            String domingo = dataSnapshot.child("domingo").getValue().toString();
-            System.out.println("domningooooo --->" + domingo);
-            String segunda = dataSnapshot.child("segunda").getValue().toString();
-            System.out.println("SEGUNDAAAAA --->" + segunda);
-            String terca = dataSnapshot.child("terca").getValue().toString();
-            System.out.println("tercaaaaaaaaaaaaa --->" + terca);
-            String quarta = dataSnapshot.child("quarta").getValue().toString();
-            System.out.println("quartaaaaaaaaaaaaaaaaa --->" + quarta);
-            String quinta = dataSnapshot.child("quinta").getValue().toString();
-            System.out.println("quintaaaaaaaaaaaaa --->" + quinta);
-            String sexta = dataSnapshot.child("sexta").getValue().toString();
-            System.out.println("sextaaaaaaaaaaaaaaaa --->" + sexta);
-            String sabado = dataSnapshot.child("sabado").getValue().toString();
-            System.out.println("sabadooooooooooo --->" + sabado);
-
-            Calendar c = Calendar.getInstance();
-            int numeroDiaSemana = c.get(Calendar.DAY_OF_WEEK);
-            String dia = "";
-
-            if (numeroDiaSemana == 1) {
-                dia = "Domingo";
-            } else if (numeroDiaSemana == 2) {
-                dia = "Segunda";
-            } else if (numeroDiaSemana == 3) {
-                dia = "Terça";
-            } else if (numeroDiaSemana == 4) {
-                dia = "Quarta";
-            } else if (numeroDiaSemana == 5) {
-                dia = "Quinta";
-            } else if (numeroDiaSemana == 6) {
-                dia = "Sexta";
-            } else if (numeroDiaSemana == 7) {
-                dia = "Sábado";
-            }
-
-            String data = getTime("dd/MM/yyyy");
-
-            if (dia.equals("Domingo") && domingo.equals("true") && email.equals(emailServidor)) {
-                System.out.println("Confirma Domingo");
-            } else if (dia.equals("Segunda") && segunda.equals("true") && email.equals(emailServidor)) {
-                System.out.println("Confirma Segunda");
-            } else if (dia.equals("Terça") && terca.equals("true") && email.equals(emailServidor)) {
-                System.out.println("Confirma Terca");
-            } else if (dia.equals("Quarta") && quarta.equals("true") && email.equals(emailServidor)) {
-                System.out.println("Confirma Quarta");
-            } else if (dia.equals("Quinta") && quinta.equals("true") && email.equals(emailServidor)) {
-                System.out.println("Confirma Quinta");
-            } else if (dia.equals("Sexta") && sexta.equals("true") && email.equals(emailServidor)) {
-                System.out.println("Confirma Sexta");
-            } else if (dia.equals("Sabado") && sabado.equals("true") && email.equals(emailServidor)) {
-                System.out.println("Confirma Sábado");
-            }
-
-            */
             }
 
             @Override
@@ -288,16 +244,9 @@ public class PassageiroActivity extends AppCompatActivity {
 
             }
         });
-        //mDataDatabaseReference.addChildEventListener(mChildEventListener);
-
-
     }
 
     public void onSignedOutCleanUp() {
 
     }
 }
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-

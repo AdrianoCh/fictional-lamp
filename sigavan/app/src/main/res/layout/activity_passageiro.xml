@@ -25,21 +25,28 @@
         android:id="@+id/mensagemTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dataTextView"
-        android:layout_marginTop="80dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="189dp"
         android:hint="@string/placeholder"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-
+    <TextView
+        android:id="@+id/informaPresencaTextView"
+        android:layout_width="289dp"
+        android:layout_height="135dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="110dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <RadioGroup
         android:id="@+id/presencaRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/mensagemTextView"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp">
+        android:layout_marginTop="239dp">
 
         <RadioButton
             android:id="@+id/presente"
@@ -60,9 +67,9 @@
         android:id="@+id/confirmarPresencabutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/presencaRadioGroup"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginBottom="42dp"
         android:text="@string/confirmar"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
