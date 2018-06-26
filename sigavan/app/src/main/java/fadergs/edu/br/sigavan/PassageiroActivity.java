@@ -170,6 +170,7 @@ public void onSignedInInitialize(String username) {
             String email = currentFirebaseUser.getEmail().toString();
             String emailServidor = dataSnapshot.child("email").getValue().toString();
 
+            /*
             String domingo = dataSnapshot.child("domingo").getValue().toString();
             System.out.println("domningooooo --->" + domingo);
             String segunda = dataSnapshot.child("segunda").getValue().toString();
@@ -222,6 +223,8 @@ public void onSignedInInitialize(String username) {
             } else if (dia.equals("Sabado") && sabado.equals("true") && email.equals(emailServidor)) {
                 System.out.println("Confirma Sábado");
             }
+
+            */
         }
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {

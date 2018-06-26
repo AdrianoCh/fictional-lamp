@@ -91,8 +91,8 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
                                         System.out.println("VALOR SELECIONADO ANTES DE SALVAR : " + faculdadeSelecionada);
                                         String[] faculdadeSeparada = faculdadeSelecionada.split("=");
 
-                                        emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0]).child("motorista").setValue(email);
-                                        emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0]).child("turno").setValue(faculdadeSeparada[1]);
+                                        emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0].trim()).child("motorista").setValue(email);
+                                        emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0].trim()).child("turno").setValue(faculdadeSeparada[1].trim());
                                     }
                                 }
 

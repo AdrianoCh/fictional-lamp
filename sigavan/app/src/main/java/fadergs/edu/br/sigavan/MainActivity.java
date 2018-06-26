@@ -92,41 +92,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*
-                Boolean domingoSelecionado = false;
-                Boolean segundaSelecionado = false;
-                Boolean tercaSelecionado = false;
-                Boolean quartaSelecionado = false;
-                Boolean quintaSelecionado  = false;
-                Boolean sextaSelecionado  = false;
-                Boolean sabadoSelecionado = false;
-
-                if(domingoChecbox.isChecked()){
-                    domingoSelecionado = true;
-                }
-                if(segundaCheckbox.isChecked()){
-                    segundaSelecionado = true;
-                }
-                if(tercaChecbox.isChecked()){
-                    tercaSelecionado = true;
-                }
-                if(tercaChecbox.isChecked()){
-                    tercaSelecionado = true;
-                }
-                if(quartaCheckbox.isChecked()){
-                    quartaSelecionado = true;
-                }
-                if(quintaCheckbox.isChecked()){
-                    segundaSelecionado = true;
-                }
-                if(sextaCheckbox.isChecked()){
-                    sextaSelecionado = true;
-                }
-                if(sabadoCheckbox.isChecked()){
-                    sabadoSelecionado = true;
-                }
-*/
-
         mAuthStateListener = new FirebaseAuth.AuthStateListener()
 
         {
@@ -148,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                             RC_SIGN_IN);
                 }
             }
-        });
+        };
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener()
 
@@ -223,9 +188,9 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("MOTORISTA");
                     Intent myIntent = new Intent(MainActivity.this, MotoristaActivity.class);
                     startActivity(myIntent);
-                } else if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals(R.string.passageiro))) {
+                } else if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Passageiro"))) {
                     //TODO: LEVAR PARA ACTIVITY DE PASSAGEIRO
-                    Intent myIntent = new Intent(MainActivity.this, PassageiroActivity.class);
+                    Intent myIntent = new Intent(MainActivity.this, CompletarCadastroPassageiroActivity.class);
                     startActivity(myIntent);
 
                 }
