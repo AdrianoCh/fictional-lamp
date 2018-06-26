@@ -3,83 +3,105 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textoPrincipalCadastroPassageiro"
+        android:id="@+id/completandocadastro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="60dp"
         android:text="@string/completar_cadastro"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
-    <CheckBox
-        android:id="@+id/domingoCheckbox"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/textoPrincipalCadastroPassageiro"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/segundaCheckbox"
-        android:layout_marginEnd="-101dp"
-        android:layout_toStartOf="@+id/quintaCheckbox"
-        android:text="@string/domingo" />
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="60dp"
+        android:layout_below="@id/completandocadastro"
+        android:text="@string/dias_aula"
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <CheckBox
         android:id="@+id/segundaCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="261dp"
-        android:text="@string/segunda" />
+        android:layout_below="@id/textoPrincipalCadastroPassageiro"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/segunda"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <CheckBox
         android:id="@+id/tercaCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="29dp"
-        android:text="@string/terca" />
+        android:layout_below="@id/textoPrincipalCadastroPassageiro"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/segundaCheckbox"
+        android:text="@string/terca"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <CheckBox
         android:id="@+id/quartaCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/domingoCheckbox"
-        android:layout_alignTop="@+id/quintaCheckbox"
-        android:text="@string/quarta" />
+        android:layout_below="@id/textoPrincipalCadastroPassageiro"
+        android:layout_alignStart="@id/sabadoCheckbox"
+        android:layout_alignTop="@id/segundaCheckbox"
+        android:text="@string/quarta"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <CheckBox
         android:id="@+id/quintaCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/sextaCheckbox"
-        android:layout_marginStart="101dp"
-        android:text="@string/quinta" />
+        android:layout_below="@id/segundaCheckbox"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/quinta"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <CheckBox
         android:id="@+id/sextaCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/sabadoCheckbox"
-        android:layout_marginEnd="117dp"
-        android:text="@string/sexta" />
+        android:layout_below="@id/tercaCheckbox"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/sexta"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <CheckBox
         android:id="@+id/sabadoCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/tercaCheckbox"
-        android:layout_marginBottom="181dp"
-        android:text="@string/sabado" />
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/segundaCheckbox"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/sabado"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <CheckBox
+        android:id="@+id/domingoCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/quintaCheckbox"
+        android:layout_alignStart="@id/sextaCheckbox"
+        android:layout_marginTop="20dp"
+        android:text="@string/domingo"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <Button
         android:id="@+id/confirmarDias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/domingoCheckbox"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="44dp"
+        android:layout_marginTop="60dp"
         android:text="@string/confirmar" />
-
 </RelativeLayout>

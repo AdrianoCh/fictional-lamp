@@ -98,27 +98,3 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
 </RelativeLayout>
-
-    <!--
-
-        android:id="@+id/intro"
-
-
-
-    <TextView
-        android:id="@+id/tvUsername"
-
-
-
-
-    <EditText
-        android:id="@+id/edtTelefone"
-
-
-
-
-    <Button
-
-
-    </RelativeLayout>
-    -->

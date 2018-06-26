@@ -3,65 +3,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textSize="22dp" />
-
-    <TextView
-        android:id="@+id/mensagemTextView"
+    <ImageView
+        android:id="@+id/iconeapp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="112dp"
-        android:textSize="20dp" />
+        android:layout_marginTop="30dp"
+        android:contentDescription="@string/icone"
+        android:src="@drawable/ic_launcher_foreground" />
 
     <TextView
         android:id="@+id/dataTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/iconeapp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="165dp"
-        android:textSize="20dp" />
+        android:hint="@string/placeholder"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+    <TextView
+        android:id="@+id/mensagemTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dataTextView"
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/placeholder"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+
 
     <RadioGroup
         android:id="@+id/presencaRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/mensagemTextView"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="160dp">
+        android:layout_marginTop="80dp">
 
         <RadioButton
             android:id="@+id/presente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/presente"
-            android:textSize="17dp" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <RadioButton
             android:id="@+id/ausente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ausente"
-            android:textSize="17dp" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
     </RadioGroup>
 
     <Button
-        android:id="@+id/confirmarPresencaButton"
-        android:layout_width="169dp"
+        android:id="@+id/confirmarPresencabutton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/presencaRadioGroup"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="70dp"
+        android:layout_marginTop="80dp"
         android:text="@string/confirmar"
-        android:textSize="20dp" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 </RelativeLayout>
