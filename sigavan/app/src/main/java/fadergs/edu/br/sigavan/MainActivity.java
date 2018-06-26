@@ -81,29 +81,21 @@ public class MainActivity extends AppCompatActivity {
 
                 FirebaseUser emailCurrentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 String email = emailCurrentFirebaseUser.getEmail();
+                textoModoDeUso = (String) radioButton.getText();
 
-                String edttelefone = telefoneEditText.getText().toString();
-                int tamanhotelefone = edttelefone.length();
-
-                if ((tamanhotelefone != 11) || (radioButton == null)) {
-                    Toast.makeText(MainActivity.this, R.string.errocadastro, Toast.LENGTH_LONG).show();
-                } else {
-                    textoModoDeUso = (String) radioButton.getText();
-
-                    if (textoModoDeUso.equals("Motorista")) {
-                        PerfilUsuarioMotorista perfilUsuarioMotorista = new PerfilUsuarioMotorista(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
-                        mDataDatabaseReference.push().setValue(perfilUsuarioMotorista);
-                        Toast.makeText(MainActivity.this, "Motorista cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
-                        Intent myIntent = new Intent(MainActivity.this, MotoristaActivity.class);
-                        startActivity(myIntent);
-                    } else if (textoModoDeUso.equals("Passageiro")) {
-                        PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email, "NC", null, null, null, null, null, null, null);
-                        perfilUsuarioPassageiro.setUid(UUID.randomUUID().toString());
-                        mDataDatabaseReference.child(perfilUsuarioPassageiro.getUid()).setValue(perfilUsuarioPassageiro);
-                        Toast.makeText(MainActivity.this, "Passageiro cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
-                        Intent myIntent = new Intent(MainActivity.this, PassageiroActivity.class);
-                        startActivity(myIntent);
-                    }
+                if (textoModoDeUso.equals("Motorista")) {
+                    PerfilUsuarioMotorista perfilUsuarioMotorista = new PerfilUsuarioMotorista(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
+                    mDataDatabaseReference.push().setValue(perfilUsuarioMotorista);
+                    Toast.makeText(MainActivity.this, "Motorista cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
+                    Intent myIntent = new Intent(MainActivity.this, MotoristaActivity.class);
+                    startActivity(myIntent);
+                } else if (textoModoDeUso.equals("Passageiro")) {
+                    PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email, "NC", null, null, null, null, null, null, null);
+                    perfilUsuarioPassageiro.setUid(UUID.randomUUID().toString());
+                    mDataDatabaseReference.child(perfilUsuarioPassageiro.getUid()).setValue(perfilUsuarioPassageiro);
+                    Toast.makeText(MainActivity.this, "Passageiro cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
+                    Intent myIntent = new Intent(MainActivity.this, PassageiroActivity.class);
+                    startActivity(myIntent);
                 }
             }
         });
@@ -143,9 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 */
 
-        mAuthStateListener = new FirebaseAuth.AuthStateListener()
-
-        {
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -164,10 +154,7 @@ public class MainActivity extends AppCompatActivity {
                             RC_SIGN_IN);
                 }
             }
-        }
-
-        ;
-
+        };
     }
 
     @Override
