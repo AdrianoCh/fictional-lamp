@@ -1,100 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp" >
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textSize="22dp"
-        />
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/cadastrarFaculdadeTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="126dp"
+        android:layout_marginTop="100dp"
         android:text="@string/cadastrar_faculdade"
-        android:textSize="20dp" />
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <TextView
-        android:id="@+id/nomeFaculdadeTextView"
+        android:id="@+id/tvfaculdade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="172dp"
-        android:layout_toStartOf="@+id/cadastrarFaculdadeTextView"
+        android:layout_below="@id/cadastrarFaculdadeTextView"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="70dp"
         android:text="@string/nome"
-        android:textSize="20dp" />
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <EditText
         android:id="@+id/nomeFaculdadeEditText"
-        android:layout_width="264dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/nomeFaculdadeTextView"
-        android:gravity="center"
+        android:layout_below="@id/cadastrarFaculdadeTextView"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="60dp"
+        android:layout_toEndOf="@id/tvfaculdade"
         android:hint="@string/dica_faculdade"
-        android:inputType="text"
-        android:textSize="20dp" />
-
-    <TextView
-        android:id="@+id/turnoFaculdadeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/nomeFaculdadeTextView"
-        android:layout_marginTop="240dp"
-        android:text="@string/turno"
-        android:textSize="20dp" />
-
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <RadioGroup
         android:id="@+id/turnoRadioGroup"
-        android:layout_width="261dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/confirmarPresencaButton"
-        android:layout_centerVertical="true">
+        android:layout_below="@id/nomeFaculdadeEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:id="@+id/turnoFaculdadeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/turno"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
         <RadioButton
             android:id="@+id/manha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/manha"
-            android:textSize="17dp" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
         <RadioButton
             android:id="@+id/tarde"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tarde"
-            android:textSize="17dp" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
         <RadioButton
             android:id="@+id/noite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/noite"
-            android:textSize="17dp" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
     </RadioGroup>
 
     <Button
         android:id="@+id/confirmarCadastroButton"
-        android:layout_width="169dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/turnoRadioGroup"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="70dp"
+        android:layout_marginTop="60dp"
         android:text="@string/confirmar"
-        android:textSize="20dp" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
 </RelativeLayout>
