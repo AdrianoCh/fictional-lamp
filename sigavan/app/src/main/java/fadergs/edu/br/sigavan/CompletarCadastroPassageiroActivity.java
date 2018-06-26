@@ -57,36 +57,6 @@ public class CompletarCadastroPassageiroActivity extends AppCompatActivity {
         sabadoCheckbox = (CheckBox) findViewById(R.id.sabadoCheckbox);
         confirmarDias = (Button) findViewById(R.id.confirmarDias);
 
-        Boolean domingoSelecionado = false;
-        Boolean segundaSelecionado = false;
-        Boolean tercaSelecionado = false;
-        Boolean quartaSelecionado = false;
-        Boolean quintaSelecionado = false;
-        Boolean sextaSelecionado = false;
-        Boolean sabadoSelecionado = false;
-
-        if (domingoChecbox.isChecked()) {
-            domingoSelecionado = true;
-        }
-        if (segundaCheckbox.isChecked()) {
-            segundaSelecionado = true;
-        }
-        if (tercaChecbox.isChecked()) {
-            tercaSelecionado = true;
-        }
-        if (quartaCheckbox.isChecked()) {
-            quartaSelecionado = true;
-        }
-        if (quintaCheckbox.isChecked()) {
-            segundaSelecionado = true;
-        }
-        if (sextaCheckbox.isChecked()) {
-            sextaSelecionado = true;
-        }
-        if (sabadoCheckbox.isChecked()) {
-            sabadoSelecionado = true;
-        }
-
         final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
         emailRef.orderByValue().addChildEventListener(new ChildEventListener() {
             @Override
