@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private ChildEventListener mChildEventListener;
-
+    FirebaseUser emailCurrentFirebaseUser;
     private Button confirmarButton;
     private Button cancelarButton;
     private EditText telefoneEditText;
@@ -71,8 +71,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseDataBase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        FirebaseUser usuario = mFirebaseAuth.getCurrentUser();
-
+        emailCurrentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mDataDatabaseReference = mFirebaseDataBase.getReference().child("users");
 
         confirmarButton.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 */
                 if(validation) {
-                    FirebaseUser emailCurrentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                     String email = emailCurrentFirebaseUser.getEmail();
                     if (textoModoDeUso.equals(R.string.motorista)) {
                         PerfilUsuarioMotorista perfilUsuarioMotorista = new PerfilUsuarioMotorista(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
