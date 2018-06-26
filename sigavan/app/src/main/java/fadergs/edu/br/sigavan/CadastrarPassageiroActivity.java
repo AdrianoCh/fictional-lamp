@@ -54,7 +54,6 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
                 Object item = parent.getItemAtPosition(pos);
                 String selecionado = item.toString();
                 System.out.println("A SELEÇÃO FOI: " + selecionado);
-                //TODO: PASSAR VALOR COLETADO DO SPINNER PARA O BANCO, LINHA 88
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
