@@ -20,6 +20,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -54,7 +56,63 @@ public class PassageiroActivity extends AppCompatActivity {
         FirebaseUser usuario = mFirebaseAuth.getCurrentUser();
 
         mFirebaseDataBase = FirebaseDatabase.getInstance();
-        mDataDatabaseReference = mFirebaseDataBase.getReference().child("users").child("presenca");
+        mDataDatabaseReference = mFirebaseDataBase.getReference().child("users");
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        DatabaseReference usersRef = mFirebaseDataBase.getReference().child("users");
+        usersRef.orderByValue().addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                PerfilUsuarioPassageiro perfilUsuarioPassageiro = dataSnapshot.getValue(PerfilUsuarioPassageiro.class);
+
+                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                String email = currentFirebaseUser.getEmail().toString();
+                String emailBanco = dataSnapshot.child("email").getValue().toString();
+                String primeiroLogin = perfilUsuarioPassageiro.getPrimeiroLogin().toString();
+
+                System.out.println("TESTE ANTES DO IF : " +primeiroLogin);
+
+                if(primeiroLogin.equals("true") && (email.equals(emailBanco))){
+                   Intent myIntent = new Intent(PassageiroActivity.this, CompletarCadastroPassageiroActivity.class);
+                   startActivity(myIntent);
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         confirmarPresencaButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,8 +122,6 @@ public class PassageiroActivity extends AppCompatActivity {
                 RadioButton radioButton = (RadioButton) findViewById(presencaSelecionada);
                 String textoPresenca = (String) radioButton.getText();
                 //TODO: TENNTAR COLOCAR VALOR NO PRESENÇA
-                //mDataDatabaseReference.push().setValue("OLA");
-
             }
         });
 
@@ -77,19 +133,19 @@ public class PassageiroActivity extends AppCompatActivity {
         int numeroDiaSemana = c.get(Calendar.DAY_OF_WEEK);
         String dia = "";
 
-        if(numeroDiaSemana == 1){
+        if (numeroDiaSemana == 1) {
             dia = "Domingo";
-        } else if(numeroDiaSemana == 2) {
+        } else if (numeroDiaSemana == 2) {
             dia = "Segunda";
-        } else if(numeroDiaSemana == 3) {
+        } else if (numeroDiaSemana == 3) {
             dia = "Terça";
-        } else if(numeroDiaSemana == 4) {
+        } else if (numeroDiaSemana == 4) {
             dia = "Quarta";
-        } else if(numeroDiaSemana == 5) {
+        } else if (numeroDiaSemana == 5) {
             dia = "Quinta";
-        } else if(numeroDiaSemana == 6) {
+        } else if (numeroDiaSemana == 6) {
             dia = "Sexta";
-        } else if(numeroDiaSemana == 7) {
+        } else if (numeroDiaSemana == 7) {
             dia = "Sábado";
         }
 
@@ -97,12 +153,11 @@ public class PassageiroActivity extends AppCompatActivity {
 
         dataTextView.setText(dia + ", " + data);
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null){
+                if (user != null) {
                     onSignedInInitialize(user.getDisplayName());
                 } else {
                     onSignedOutCleanUp();
@@ -118,20 +173,9 @@ public class PassageiroActivity extends AppCompatActivity {
                 }
             }
         };
-
-
-
-
-
-
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
-    public static String getTime(String format){
+    public static String getTime(String format) {
         if (format.isEmpty()) {
             throw new NullPointerException("A pattern não pode ser NULL!");
         }
@@ -143,32 +187,29 @@ public class PassageiroActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-public void onSignedInInitialize(String username) {
-    perfilUsuarioRegistrado = username;
+    public void onSignedInInitialize(String username) {
+        perfilUsuarioRegistrado = username;
 
-    //Toast.makeText(this, "Bem Vindo " + perfilUsuarioRegistrado, Toast.LENGTH_SHORT).show();
+        DatabaseReference usersRef = mFirebaseDataBase.getReference().child("users");
+        usersRef.orderByValue().addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                PerfilUsuarioPassageiro perfilUsuarioPassageiro = dataSnapshot.getValue(PerfilUsuarioPassageiro.class);
 
-    DatabaseReference usersRef = mFirebaseDataBase.getReference().child("users");
-    usersRef.orderByValue().addChildEventListener(new ChildEventListener() {
-        @Override
-        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            PerfilUsuarioPassageiro perfilUsuarioPassageiro = dataSnapshot.getValue(PerfilUsuarioPassageiro.class);
-
-            FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-            String email = currentFirebaseUser.getEmail().toString();
-            String emailServidor = dataSnapshot.child("email").getValue().toString();
+                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                String email = currentFirebaseUser.getEmail().toString();
+                String emailServidor = dataSnapshot.child("email").getValue().toString();
 
             /*
             String domingo = dataSnapshot.child("domingo").getValue().toString();
@@ -225,37 +266,37 @@ public void onSignedInInitialize(String username) {
             }
 
             */
-        }
-        @Override
-        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
 
-        }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-        @Override
-        public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
 
-        }
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-        @Override
-        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
 
-        }
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
+            }
 
-        }
-    });
-    //mDataDatabaseReference.addChildEventListener(mChildEventListener);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        //mDataDatabaseReference.addChildEventListener(mChildEventListener);
 
 
-}
+    }
 
     public void onSignedOutCleanUp() {
 
     }
 }
-
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

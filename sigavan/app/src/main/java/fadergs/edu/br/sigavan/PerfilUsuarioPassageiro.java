@@ -6,13 +6,13 @@ public class PerfilUsuarioPassageiro {
     private String nome;
     private String telefone;
     private String modoDeUso;
-    private Boolean primeiroLogin;
+    private String primeiroLogin;
     private String email;
 
     public PerfilUsuarioPassageiro() {
     }
 
-    public PerfilUsuarioPassageiro(String nome, String telefone, String modoDeUso, Boolean primeiroLogin, String email) {
+    public PerfilUsuarioPassageiro(String nome, String telefone, String modoDeUso, String primeiroLogin, String email) {
         this.uid = uid;
         this.nome = nome;
         this.telefone = telefone;
@@ -53,11 +53,11 @@ public class PerfilUsuarioPassageiro {
         this.modoDeUso = modoDeUso;
     }
 
-    public Boolean getPrimeiroLogin() {
+    public String getPrimeiroLogin() {
         return primeiroLogin;
     }
 
-    public void setPrimeiroLogin(Boolean primeiroLogin) {
+    public void setPrimeiroLogin(String primeiroLogin) {
         this.primeiroLogin = primeiroLogin;
     }
 

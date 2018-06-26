@@ -57,6 +57,36 @@ public class CompletarCadastroPassageiroActivity extends AppCompatActivity {
         sabadoCheckbox = (CheckBox) findViewById(R.id.sabadoCheckbox);
         confirmarDias = (Button) findViewById(R.id.confirmarDias);
 
+        Boolean domingoSelecionado = false;
+        Boolean segundaSelecionado = false;
+        Boolean tercaSelecionado = false;
+        Boolean quartaSelecionado = false;
+        Boolean quintaSelecionado = false;
+        Boolean sextaSelecionado = false;
+        Boolean sabadoSelecionado = false;
+
+        if (domingoChecbox.isChecked()) {
+            domingoSelecionado = true;
+        }
+        if (segundaCheckbox.isChecked()) {
+            segundaSelecionado = true;
+        }
+        if (tercaChecbox.isChecked()) {
+            tercaSelecionado = true;
+        }
+        if (quartaCheckbox.isChecked()) {
+            quartaSelecionado = true;
+        }
+        if (quintaCheckbox.isChecked()) {
+            segundaSelecionado = true;
+        }
+        if (sextaCheckbox.isChecked()) {
+            sextaSelecionado = true;
+        }
+        if (sabadoCheckbox.isChecked()) {
+            sabadoSelecionado = true;
+        }
+
         final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
         emailRef.orderByValue().addChildEventListener(new ChildEventListener() {
             @Override
@@ -85,7 +115,7 @@ public class CompletarCadastroPassageiroActivity extends AppCompatActivity {
                                         System.out.println("TESTE CPNSULTA" + separado[0] + separado[1]);
 
                                         if (domingoChecbox.isChecked()) {
-                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("diasAula").child("Domingo").setValue("true");
+                                            emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("presenca").child("Domingo").setValue("true");
                                         }
                                         if (segundaCheckbox.isChecked()) {
                                             emailRef.child(passageiroKey).child("aulas").child(separado[0].replaceAll("\\{", "").trim()).child("diasAula").child("Segunda").setValue("true");
@@ -107,9 +137,11 @@ public class CompletarCadastroPassageiroActivity extends AppCompatActivity {
                                         } else {
                                             Toast.makeText(CompletarCadastroPassageiroActivity.this, "Selecione uma opção", Toast.LENGTH_SHORT).show();
                                         }
+                                            emailRef.child(passageiroKey).child("primeiroLogin").setValue("false");
+                                        Intent myIntent = new Intent(CompletarCadastroPassageiroActivity.this, PassageiroActivity.class);
+                                        startActivity(myIntent);
                                     }
-                                    Intent myIntent = new Intent(CompletarCadastroPassageiroActivity.this, PassageiroActivity.class);
-                                    startActivity(myIntent);
+
                                 }
 
                                 @Override

@@ -77,12 +77,12 @@ public class MainActivity extends AppCompatActivity {
                     validation = true;
 
                     if (textoModoDeUso.equals("Motorista")) {
-                        PerfilUsuarioMotorista perfilUsuarioMotorista = new PerfilUsuarioMotorista(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
+                        PerfilUsuarioMotorista perfilUsuarioMotorista = new PerfilUsuarioMotorista(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, "false", email);
                         mDataDatabaseReference.push().setValue(perfilUsuarioMotorista);
                         Toast.makeText(MainActivity.this, "Motorista cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
                         //TODO Intent -> MotoristaActivity
                     } else if (textoModoDeUso.equals("Passageiro")) {
-                        PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, false, email);
+                        PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, "false", email);
                         perfilUsuarioPassageiro.setUid(UUID.randomUUID().toString());
                         mDataDatabaseReference.child(perfilUsuarioPassageiro.getUid()).setValue(perfilUsuarioPassageiro);
                         Toast.makeText(MainActivity.this, "Passageiro cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
@@ -171,9 +171,9 @@ public class MainActivity extends AppCompatActivity {
                 String emailBanco = dataSnapshot.child("email").getValue().toString();
 
                 // Verifica se existe a variavel primeirologin
-                Boolean primeiroLogin = perfilUsuarioPassageiro.getPrimeiroLogin();
+                String primeiroLogin = perfilUsuarioPassageiro.getPrimeiroLogin();
 
-                if ((primeiroLogin == false) && (email.equals(emailBanco))) {
+                if ((primeiroLogin.equals("false")) && (email.equals(emailBanco))) {
                     //TODO: MANTER NA ACTIVITY DE CADASTRO
                     System.out.println("É PRIMEIRA VEZ");
                 } else {
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(myIntent);
                 } else if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Passageiro"))) {
                     //TODO: LEVAR PARA ACTIVITY DE PASSAGEIRO
-                    Intent myIntent = new Intent(MainActivity.this, CompletarCadastroPassageiroActivity.class);
+                    Intent myIntent = new Intent(MainActivity.this, PassageiroActivity.class);
                     startActivity(myIntent);
 
                 }

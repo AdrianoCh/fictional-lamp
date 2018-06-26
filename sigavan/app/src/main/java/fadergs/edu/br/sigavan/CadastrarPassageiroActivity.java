@@ -44,7 +44,7 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
 
         emailPassageiroEditText = (EditText) findViewById(R.id.emailPassageiroEditText);
         faculdadeSpinner = (Spinner) findViewById(R.id.faculdadeSpinner);
-        confirmarButton = (Button) findViewById(R.id.confirmarbutton);
+        confirmarButton = (Button) findViewById(R.id.confirmarCadastroButton);
 
         mFirebaseDataBase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -132,7 +132,6 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 final List<String> faculdades = new ArrayList<String>();
-
 
                 for (DataSnapshot faculdadesSnapshot : dataSnapshot.getChildren()) {
                     Object nomeFsculdade = faculdadesSnapshot.child("faculdades").getValue();
