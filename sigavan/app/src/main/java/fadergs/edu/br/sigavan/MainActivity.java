@@ -197,13 +197,7 @@ public class MainActivity extends AppCompatActivity {
                 // Pega o valor do email no banco
                 String emailBanco = dataSnapshot.child("email").getValue().toString();
 
-                // Verifica se existe a variavel primeirologin
-                Boolean primeiroLogin = perfilUsuarioPassageiro.getPrimeiroLogin();
-
-                if (primeiroLogin.equals(false)) {
-                    // Realizar cadastro
-
-                } else if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals(R.string.motorista))) {
+                if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals(R.string.motorista))) {
                     Intent myIntent = new Intent(MainActivity.this, MotoristaActivity.class);
                     startActivity(myIntent);
                 } else if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals(R.string.passageiro))) {
