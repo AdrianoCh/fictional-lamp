@@ -47,7 +47,7 @@ public class PassageiroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passageiro);
 
-        confirmarPresencaButton = (Button) findViewById(R.id.confirmarPresencaButton);
+        confirmarPresencaButton = (Button) findViewById(R.id.confirmarPresencabutton);
         presencaRadioGroup = (RadioGroup) findViewById(R.id.presencaRadioGroup);
         mensagemTextView = (TextView) findViewById(R.id.mensagemTextView);
         dataTextView = (TextView) findViewById(R.id.dataTextView);
