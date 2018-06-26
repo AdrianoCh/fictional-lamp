@@ -203,14 +203,12 @@ public class MainActivity extends AppCompatActivity {
                 if (primeiroLogin.equals(false)) {
                     // Realizar cadastro
 
-                } else {
-                    if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals(R.string.motorista))) {
-                        Intent myIntent = new Intent(MainActivity.this, MotoristaActivity.class);
-                        startActivity(myIntent);
-                    } else if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals(R.string.passageiro))) {
-                        Intent myIntent = new Intent(MainActivity.this, PassageiroActivity.class);
-                        startActivity(myIntent);
-                    }
+                } else if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals(R.string.motorista))) {
+                    Intent myIntent = new Intent(MainActivity.this, MotoristaActivity.class);
+                    startActivity(myIntent);
+                } else if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals(R.string.passageiro))) {
+                    Intent myIntent = new Intent(MainActivity.this, PassageiroActivity.class);
+                    startActivity(myIntent);
                 }
             }
 
