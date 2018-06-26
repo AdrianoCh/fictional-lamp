@@ -1,14 +1,13 @@
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/cadastrarPassageiroTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="79dp"
-        android:text="@string/app_name"
+        android:layout_marginTop="100dp"
+        android:text="@string/cadastrar_passageiro"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
@@ -16,18 +15,21 @@
         android:id="@+id/emailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="191dp"
+        android:layout_below="@id/cadastrarPassageiroTextView"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="70dp"
         android:text="@string/email"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <EditText
         android:id="@+id/emailPassageiroEditText"
-        android:layout_width="279dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/emailTextView"
-        android:layout_alignParentEnd="true"
+        android:layout_below="@id/cadastrarPassageiroTextView"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="60dp"
+        android:layout_toEndOf="@id/emailTextView"
         android:hint="@string/dicaEmailPassageiro"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
@@ -36,25 +38,29 @@
         android:id="@+id/faculdadeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="267dp"
+        android:layout_below="@id/emailTextView"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="80dp"
         android:text="@string/faculdade"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <Spinner
         android:id="@+id/faculdadeSpinner"
-        android:layout_width="239dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/faculdadeTextView"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@id/emailPassageiroEditText"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="45dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:layout_toEndOf="@id/faculdadeTextView" />
 
     <Button
-        android:id="@+id/confirmarbutton"
+        android:id="@+id/confirmarCadastroButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/faculdadeSpinner"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="76dp"
-        android:text="@string/confirmar" />
+        android:layout_marginTop="130dp"
+        android:text="@string/confirmar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 </RelativeLayout>
