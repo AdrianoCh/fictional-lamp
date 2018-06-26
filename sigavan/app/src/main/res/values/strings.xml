@@ -11,7 +11,7 @@
     <string name="confirmar">Confirmar</string>
     <string name="Cancelar">Cancelar</string>
     <string name="telefone">Telefone: </string>
-    <string name="dicaTelefone">Insira seu telefone</string>
+    <string name="dicaTelefone">55999999999</string>
     <string name="placeholder">placeholder</string>
     <string name="errocadastro">Dados preenchidos corretamente. Por favor, preencha o número de telefone e o modo de uso corretamente.</string>
 
