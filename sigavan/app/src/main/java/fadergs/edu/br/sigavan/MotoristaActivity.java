@@ -119,18 +119,21 @@ public class MotoristaActivity extends AppCompatActivity {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
-                            Query query1 = emailRef.orderByChild("email").equalTo(email).limitToFirst(1);
-                            //Query query1 = emailRef.orderByChild("modoDeUso").equalTo("Passageiro");
+                            Query query1 = emailRef.orderByChild(data).equalTo("Presente!");
                             query1.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                    String teste = dataSnapshot.getChildren().toString();
-                                    System.out.println("TESTEEEEEEEEEEEEEEE" + teste);
-
                                     for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
                                         String passageiroKey = childSnapshot.getKey();
                                         System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
+                                        Object nome = childSnapshot.child("nome").getValue();
+                                        Object presenca = childSnapshot.child(data).getValue();
+                                        Object testeBusca = childSnapshot.child("aulas");
+
+                                        System.out.println("NOME : " + nome);
+                                        System.out.println("PRESENCA : " + presenca);
+                                        System.out.println("TESTE BUSCA: " + testeBusca);
                                     }
                                 }
 

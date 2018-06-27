@@ -93,6 +93,7 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
 
                                         emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0].trim()).child("motorista").setValue(email);
                                         emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0].trim()).child("turno").setValue(faculdadeSeparada[1].trim());
+                                        emailRef.child(passageiroKey).child(faculdadeSeparada[0]).setValue(faculdadeSeparada[1]);
 
                                         new AlertDialog.Builder(CadastrarPassageiroActivity.this)
                                                 .setTitle("Cadastro de Aluno")
