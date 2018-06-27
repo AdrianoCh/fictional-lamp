@@ -106,6 +106,7 @@ public class PassageiroActivity extends AppCompatActivity {
 
                                         emailRef.child(passageiroKey).child("aulas").child(formatado).child("presenca").child(data).setValue(textoPresenca);
                                         informaPresenca.setText(getString(R.string.primeira_parte_mensagem) + " " + textoPresenca + " " + getString(R.string.segunda_parte_mensagem));
+                                        emailRef.child(passageiroKey).child(data).setValue(textoPresenca);
                                     }
                                 }
 
