@@ -1,6 +1,7 @@
 package fadergs.edu.br.sigavan;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -75,7 +76,7 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
                     confirmarButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            String emailPassageiro = emailPassageiroEditText.getText().toString();
+                            final String emailPassageiro = emailPassageiroEditText.getText().toString();
 
                             Query query1 = emailRef.orderByChild("email").equalTo(emailPassageiro).limitToFirst(1);
                             query1.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -92,6 +93,26 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
 
                                         emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0].trim()).child("motorista").setValue(email);
                                         emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0].trim()).child("turno").setValue(faculdadeSeparada[1].trim());
+
+                                        new AlertDialog.Builder(CadastrarPassageiroActivity.this)
+                                                .setTitle("Cadastro de Aluno")
+                                                .setMessage("Deseja cadastrar outro aluno?")
+                                                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        emailPassageiroEditText.setText("");
+                                                    }
+                                                })
+                                                .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        Intent intent = new Intent(CadastrarPassageiroActivity.this, MotoristaActivity.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                });
+
+
                                     }
                                 }
 
