@@ -81,13 +81,11 @@ public class MainActivity extends AppCompatActivity {
                         PerfilUsuarioMotorista perfilUsuarioMotorista = new PerfilUsuarioMotorista(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, "false", email);
                         mDataDatabaseReference.push().setValue(perfilUsuarioMotorista);
                         Toast.makeText(MainActivity.this, "Motorista cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
-                        //TODO Intent -> MotoristaActivity
                     } else if (textoModoDeUso.equals("Passageiro")) {
                         PerfilUsuarioPassageiro perfilUsuarioPassageiro = new PerfilUsuarioPassageiro(perfilUsuarioRegistrado, telefoneEditText.getText().toString(), textoModoDeUso, "false", email);
                         perfilUsuarioPassageiro.setUid(UUID.randomUUID().toString());
                         mDataDatabaseReference.child(perfilUsuarioPassageiro.getUid()).setValue(perfilUsuarioPassageiro);
                         Toast.makeText(MainActivity.this, "Passageiro cadastrado! Bem vindo " + emailCurrentFirebaseUser.getDisplayName() + "!", Toast.LENGTH_LONG).show();
-                        //TODO Intent -> PassageiroActivity
                     }
                 }
             }
@@ -175,9 +173,10 @@ public class MainActivity extends AppCompatActivity {
                 String primeiroLogin = perfilUsuarioPassageiro.getPrimeiroLogin();
 
                 // ProgressBar
-                final ProgressDialog progressDialog = new ProgressDialog(this);
+                final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.setTitle(R.string.carregando);
+                progressDialog.setTitle(R.string.identificando);
+                progressDialog.setMessage(getResources().getString(R.string.porfavoraguarde));
                 progressDialog.setCanceledOnTouchOutside(false);
 
                 progressDialog.show();
@@ -188,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                         int i = 0;
                         while (i < 100) {
                             try {
-                                Thread.sleep(300);
+                                Thread.sleep(3000);
                                 progressDialog.incrementProgressBy(1);
                                 progressDialog.incrementSecondaryProgressBy(5);
                                 i++;
@@ -201,12 +200,13 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 thread.start();
-                
+
                 if ((primeiroLogin.equals("false")) && (email.equals(emailBanco))) {
                     System.out.println("É PRIMEIRA VEZ");
                 } else {
                     System.out.println("NÃO É A PRIMEIRA VEZ");
                 }
+                // TODO - Carlos ou Adriano > Verificar o primeiro uso do passageiro e forçar a completar o cadastro ao invés de abrir a tela de marcar presença.
                 if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Motorista"))) {
                     System.out.println("MOTORISTA");
                     Intent myIntent = new Intent(MainActivity.this, MotoristaActivity.class);

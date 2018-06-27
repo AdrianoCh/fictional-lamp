@@ -14,7 +14,8 @@
     <string name="dicaTelefone">55999999999</string>
     <string name="placeholder">placeholder</string>
     <string name="errocadastro">Dados preenchidos corretamente. Por favor, preencha o número de telefone e o modo de uso corretamente.</string>
-    <string name="carregando">Carregando...</string>
+    <string name="identificando">Identificando usuário</string>
+    <string name="porfavoraguarde">Por favor aguarde.</string>
 
     //FULLSCREEN ACTIVITY
     <string name="title_activity_fullscreen">FullscreenActivity</string>
