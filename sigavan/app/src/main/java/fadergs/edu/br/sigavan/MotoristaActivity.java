@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +29,8 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fadergs.edu.br.sigavan.PassageiroActivity.getTime;
+
 public class MotoristaActivity extends AppCompatActivity {
     private FloatingActionButton floatingActionButton;
     private  FloatingActionButton floatingActionButton2;
@@ -37,6 +42,7 @@ public class MotoristaActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private ChildEventListener mChildEventListener;
+    private Spinner selecionarFaculdadeSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +51,23 @@ public class MotoristaActivity extends AppCompatActivity {
 
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         floatingActionButton2 = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
+        selecionarFaculdadeSpinner = (Spinner) findViewById(R.id.selecionarFaculdadeSpinner);
 
         mFirebaseDataBase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
 
         mDataDatabaseReference = mFirebaseDataBase.getReference();
+
+        selecionarFaculdadeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                Object item = parent.getItemAtPosition(pos);
+                String selecionado = item.toString();
+                System.out.println("A SELEÇÃO FOI: " + selecionado);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,10 +114,33 @@ public class MotoristaActivity extends AppCompatActivity {
                         System.out.println("TESTE EMAIL: " +email);
 
                         if(email.equals(emailBanco)){
-                            viewholder.setNome(emailBanco);
+                            popularSpinner();
+                            final String data = getTime("dd-MM-yyyy");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                            final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
+                            Query query1 = emailRef.orderByChild("email").equalTo(email).limitToFirst(1);
+                            //Query query1 = emailRef.orderByChild("modoDeUso").equalTo("Passageiro");
+                            query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                    String teste = dataSnapshot.getChildren().toString();
+                                    System.out.println("TESTEEEEEEEEEEEEEEE" + teste);
+
+                                    for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                        String passageiroKey = childSnapshot.getKey();
+                                        System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    //Se ocorrer um erro
+                                }
+                            });
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         }
-
-
                     }
 
                     @Override
@@ -118,12 +159,7 @@ public class MotoristaActivity extends AppCompatActivity {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-
-
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
             }
 
         };
@@ -145,5 +181,45 @@ public class MotoristaActivity extends AppCompatActivity {
         public void setPresenca (String presenca) {
             textView_presenca.setText(presenca);
         }
+    }
+
+    public void popularSpinner() {
+        mDataDatabaseReference = mFirebaseDataBase.getReference().child("users");
+        mDataDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                final List<String> faculdades = new ArrayList<String>();
+
+                for (DataSnapshot faculdadesSnapshot : dataSnapshot.getChildren()) {
+                    Object nomeFsculdade = faculdadesSnapshot.child("faculdades").getValue();
+                    String modificado = "";
+                    if (nomeFsculdade == null) {
+                        System.out.println("É NULL");
+                    } else {
+                        String nome = nomeFsculdade.toString();
+                        String[] separado = nome.split(",");
+                        for (String item : separado) {
+                            if (item.contains("{")) {
+                                modificado = item.replaceAll("\\{", "");
+                                faculdades.add(modificado);
+                            } else if (item.contains("}")) {
+                                modificado = item.replaceAll("\\}", "");
+                                faculdades.add(modificado);
+                            } else {
+                                faculdades.add(item);
+                            }
+                        }
+                    }
+                }
+                ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(MotoristaActivity.this, android.R.layout.simple_spinner_item, faculdades);
+                areasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                selecionarFaculdadeSpinner.setAdapter(areasAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 }
