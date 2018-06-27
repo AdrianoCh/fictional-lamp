@@ -1,13 +1,14 @@
 package fadergs.edu.br.sigavan;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -173,20 +174,44 @@ public class MainActivity extends AppCompatActivity {
                 // Verifica se existe a variavel primeirologin
                 String primeiroLogin = perfilUsuarioPassageiro.getPrimeiroLogin();
 
+                // ProgressBar
+                final ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.setTitle(R.string.carregando);
+                progressDialog.setCanceledOnTouchOutside(false);
+
+                progressDialog.show();
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        int i = 0;
+                        while (i < 100) {
+                            try {
+                                Thread.sleep(300);
+                                progressDialog.incrementProgressBy(1);
+                                progressDialog.incrementSecondaryProgressBy(5);
+                                i++;
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        progressDialog.dismiss();
+                    }
+                });
+
+                thread.start();
+                
                 if ((primeiroLogin.equals("false")) && (email.equals(emailBanco))) {
-                    //TODO: MANTER NA ACTIVITY DE CADASTRO
                     System.out.println("É PRIMEIRA VEZ");
                 } else {
                     System.out.println("NÃO É A PRIMEIRA VEZ");
-                    //TODO: LEVAR PARA ACTIVITY DE USUARIO JA CADASTRADO
                 }
                 if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Motorista"))) {
-                    //TODO: Levar PARA ACTIVITY DE MOTORISTA
                     System.out.println("MOTORISTA");
                     Intent myIntent = new Intent(MainActivity.this, MotoristaActivity.class);
                     startActivity(myIntent);
                 } else if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Passageiro"))) {
-                    //TODO: LEVAR PARA ACTIVITY DE PASSAGEIRO
                     Intent myIntent = new Intent(MainActivity.this, PassageiroActivity.class);
                     startActivity(myIntent);
 
