@@ -90,7 +90,25 @@ public class MotoristaActivity extends AppCompatActivity {
                 mDatabaseReference) {
             @Override
             protected void populateViewHolder(final pupviewholder viewholder, PassageiroViewHolderObjeto pup, int position) {
-                popularSpinner();
+                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                final String email = currentFirebaseUser.getEmail().toString();
+                System.out.println("EMAIL LOGADO" + email);
+
+                final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
+                Query query1 = emailRef.orderByChild("motorista").equalTo(email);
+                query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                popularSpinner();
+                            }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //Se ocorrer um erro
+                    }
+                });
                 faculdadeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                         Object item = parent.getItemAtPosition(pos);
@@ -113,10 +131,9 @@ public class MotoristaActivity extends AppCompatActivity {
                                 PassageiroViewHolderObjeto passageiroViewHolderObjeto = dataSnapshot.getValue(PassageiroViewHolderObjeto.class);
 
                                 FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                                final String email = currentFirebaseUser.getEmail().toString();
 
-                                String email = currentFirebaseUser.getEmail().toString();
-
-                                String emailBanco = dataSnapshot.child("email").getValue().toString();
+                                final String emailBanco = dataSnapshot.child("email").getValue().toString();
 
                                 String preferencias = atualizarRecuperacaoPreferencias();
                                 System.out.println("PREFERENCIA" + preferencias);
@@ -127,22 +144,24 @@ public class MotoristaActivity extends AppCompatActivity {
                                 final String data = getTime("dd-MM-yyyy");
 
                                 final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
-
                                 Query query1 = emailRef.orderByChild(preferenciaSeparada[0].trim()).equalTo(preferenciaSeparada[1].trim());
                                 query1.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if (email.equals(emailBanco)) {
+                                            for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                                String passageiroKey = childSnapshot.getKey();
+                                                System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
+                                                Object nome = childSnapshot.child("nome").getValue();
+                                                Object presenca = childSnapshot.child(data).getValue();
+                                                Object testeBusca = childSnapshot.child("PUCRS");
 
-                                        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                                            String passageiroKey = childSnapshot.getKey();
-                                            System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
-                                            Object nome = childSnapshot.child("nome").getValue();
-                                            Object presenca = childSnapshot.child(data).getValue();
-                                            Object testeBusca = childSnapshot.child("PUCRS");
-
-                                            if (nome != null) {
-                                                viewholder.setNome(nome.toString());
-                                                viewholder.setPresenca(presenca.toString());
+                                                if ((nome != null) && (presenca != null)) {
+                                                    viewholder.setNome(nome.toString());
+                                                    viewholder.setPresenca(presenca.toString());
+                                                } else {
+                                                    viewholder.setNome("Nenhum Aluno Marcou Presença Hoje");
+                                                }
                                             }
                                         }
                                     }

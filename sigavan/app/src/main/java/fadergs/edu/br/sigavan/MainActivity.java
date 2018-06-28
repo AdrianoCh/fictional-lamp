@@ -173,46 +173,6 @@ public class MainActivity extends AppCompatActivity {
                 // Verifica se existe a variavel primeirologin
                 String primeiroLogin = perfilUsuarioPassageiro.getPrimeiroLogin();
 
-                // ProgressBar
-                final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.setTitle(R.string.identificando);
-                progressDialog.setMessage(getResources().getString(R.string.porfavoraguarde));
-                progressDialog.setCanceledOnTouchOutside(false);
-
-                progressDialog.show();
-
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        TextView textoprincipal = (TextView) findViewById(R.id.textoPrincipal);
-                        TextView nomeTextView = (TextView) findViewById(R.id.nomeTextView);
-                        TextView tvTelefone = (TextView) findViewById(R.id.tvTelefone);
-
-                        textoprincipal.setVisibility(View.INVISIBLE);
-                        nomeTextView.setVisibility(View.INVISIBLE);
-                        nomeUsuarioTextView.setVisibility(View.INVISIBLE);
-                        tvTelefone.setVisibility(View.INVISIBLE);
-                        telefoneEditText.setVisibility(View.INVISIBLE);
-                        modoDeUsoRadioGroup.setVisibility(View.INVISIBLE);
-                        confirmarButton.setVisibility(View.INVISIBLE);
-
-                        int i = 0;
-                        while (i < 100) {
-                            try {
-                                Thread.sleep(3000);
-                                progressDialog.incrementProgressBy(1);
-                                progressDialog.incrementSecondaryProgressBy(5);
-                                i++;
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                        progressDialog.dismiss();
-                    }
-                });
-
-                thread.start();
 
                 if ((primeiroLogin.equals("false")) && (email.equals(emailBanco))) {
                     System.out.println("É PRIMEIRA VEZ");

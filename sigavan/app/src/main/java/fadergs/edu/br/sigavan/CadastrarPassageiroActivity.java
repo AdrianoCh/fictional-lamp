@@ -61,7 +61,25 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
             }
         });
 
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        final String email = currentFirebaseUser.getEmail().toString();
+
         final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
+        Query query1 = emailRef.orderByChild("motorista").equalTo(email);
+        query1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                    popularSpinner();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //Se ocorrer um erro
+            }
+        });
+        //final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
         emailRef.orderByValue().addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
@@ -71,8 +89,6 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
                 String emailBanco = dataSnapshot.child("email").getValue().toString();
 
                 if (email.equals(emailBanco)) {
-                    popularSpinner();
-
                     confirmarButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -91,6 +107,7 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
                                         System.out.println("VALOR SELECIONADO ANTES DE SALVAR : " + faculdadeSelecionada);
                                         String[] faculdadeSeparada = faculdadeSelecionada.split("=");
 
+                                        emailRef.child(passageiroKey).child("motorista").setValue(email);
                                         emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0].trim()).child("motorista").setValue(email);
                                         emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0].trim()).child("turno").setValue(faculdadeSeparada[1].trim());
                                         emailRef.child(passageiroKey).child(faculdadeSeparada[0]).setValue(faculdadeSeparada[1]);
