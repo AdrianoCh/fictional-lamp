@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
                                     .createSignInIntentBuilder()
                                     .setIsSmartLockEnabled(false)
                                     .setProviders(
-                                            AuthUI.GOOGLE_PROVIDER,
                                             AuthUI.EMAIL_PROVIDER)
                                     .build(),
                             RC_SIGN_IN);
@@ -203,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     System.out.println("NÃO É A PRIMEIRA VEZ");
                 }
-                // TODO - Carlos ou Adriano > Verificar o primeiro uso do passageiro e forçar a completar o cadastro ao invés de abrir a tela de marcar presença.
+
                 if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Motorista"))) {
                     TextView textoprincipal = (TextView) findViewById(R.id.textoPrincipal);
                     TextView nomeTextView = (TextView) findViewById(R.id.nomeTextView);
