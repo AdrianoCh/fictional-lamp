@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -185,6 +188,27 @@ public class PassageiroActivity extends AppCompatActivity {
                 }
             }
         };
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarpactivity);
+        setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu (Menu menu) {
+        // Inflate the menu
+        getMenuInflater().inflate(R.menu.menu_passageiro, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.logout:
+                // TODO -> Adriano -> Inserir logout
+                return(true);
+        }
+        return(super.onOptionsItemSelected(item));
     }
 
     public static String getTime(String format) {
