@@ -281,6 +281,9 @@ public class MotoristaActivity extends AppCompatActivity {
                 return (true);
             case R.id.logout:
                 AuthUI.getInstance().signOut(this);
+                Intent intent3 = new Intent(MotoristaActivity.this, SplashScreen.class);
+                startActivity(intent3);
+                finish();
                 return true;
         }
         return (super.onOptionsItemSelected(item));
