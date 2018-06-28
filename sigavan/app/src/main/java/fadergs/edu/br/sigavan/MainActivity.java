@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -22,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.firebase.ui.auth.AuthUI;
+
+import org.w3c.dom.Text;
 
 import java.util.UUID;
 
@@ -184,6 +185,18 @@ public class MainActivity extends AppCompatActivity {
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        TextView textoprincipal = (TextView) findViewById(R.id.textoPrincipal);
+                        TextView nomeTextView = (TextView) findViewById(R.id.nomeTextView);
+                        TextView tvTelefone = (TextView) findViewById(R.id.tvTelefone);
+
+                        textoprincipal.setVisibility(View.INVISIBLE);
+                        nomeTextView.setVisibility(View.INVISIBLE);
+                        nomeUsuarioTextView.setVisibility(View.INVISIBLE);
+                        tvTelefone.setVisibility(View.INVISIBLE);
+                        telefoneEditText.setVisibility(View.INVISIBLE);
+                        modoDeUsoRadioGroup.setVisibility(View.INVISIBLE);
+                        confirmarButton.setVisibility(View.INVISIBLE);
+
                         int i = 0;
                         while (i < 100) {
                             try {

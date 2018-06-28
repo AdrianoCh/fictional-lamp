@@ -94,26 +94,6 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
                                         emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0].trim()).child("motorista").setValue(email);
                                         emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0].trim()).child("turno").setValue(faculdadeSeparada[1].trim());
                                         emailRef.child(passageiroKey).child(faculdadeSeparada[0]).setValue(faculdadeSeparada[1]);
-
-                                        new AlertDialog.Builder(CadastrarPassageiroActivity.this)
-                                                .setTitle("Cadastro de Aluno")
-                                                .setMessage("Deseja cadastrar outro aluno?")
-                                                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                                        emailPassageiroEditText.setText("");
-                                                    }
-                                                })
-                                                .setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                                        Intent intent = new Intent(CadastrarPassageiroActivity.this, MotoristaActivity.class);
-                                                        startActivity(intent);
-                                                        finish();
-                                                    }
-                                                });
-
-
                                     }
                                 }
 
@@ -122,6 +102,23 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
                                     //Se ocorrer um erro
                                 }
                             });
+                            new AlertDialog.Builder(CadastrarPassageiroActivity.this)
+                                    .setTitle("Cadastro de Aluno")
+                                    .setMessage("Deseja cadastrar outro aluno?")
+                                    .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            emailPassageiroEditText.setText("");
+                                        }
+                                    })
+                                    .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            Intent intent = new Intent(CadastrarPassageiroActivity.this, MotoristaActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
                         }
                     });
                 }
