@@ -98,15 +98,22 @@ public class PassageiroActivity extends AppCompatActivity {
                                         String passageiroKey = childSnapshot.getKey();
                                         System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
 
-                                        String resultado = dataSnapshot.child(passageiroKey).child("aulas").getValue().toString();
-                                        String separado[] = resultado.split("=");
-                                        String formatado = separado[0].replaceAll("\\{", "").trim();
+                                        Object resultadoObject = dataSnapshot.child(passageiroKey).child("aulas").getValue();
 
-                                        String data = getTime("dd-MM-yyyy");
+                                        if(resultadoObject != null){
+                                            String resultado = resultadoObject.toString();
 
-                                        emailRef.child(passageiroKey).child("aulas").child(formatado).child("presenca").child(data).setValue(textoPresenca);
-                                        informaPresenca.setText(getString(R.string.primeira_parte_mensagem) + " " + textoPresenca + " " + getString(R.string.segunda_parte_mensagem));
-                                        emailRef.child(passageiroKey).child(data).setValue(textoPresenca);
+                                            String separado[] = resultado.split("=");
+                                            String formatado = separado[0].replaceAll("\\{", "").trim();
+
+                                            String data = getTime("dd-MM-yyyy");
+
+                                            emailRef.child(passageiroKey).child("aulas").child(formatado).child("presenca").child(data).setValue(textoPresenca);
+                                            informaPresenca.setText(getString(R.string.primeira_parte_mensagem) + " " + textoPresenca + " " + getString(R.string.segunda_parte_mensagem));
+                                            emailRef.child(passageiroKey).child(data).setValue(textoPresenca);
+                                        } else {
+                                            mensagemTextView.setText("Você não possui aulas cadastradas");
+                                        }
                                     }
                                 }
 
