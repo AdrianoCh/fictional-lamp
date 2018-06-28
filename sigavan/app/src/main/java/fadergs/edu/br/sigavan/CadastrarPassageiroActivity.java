@@ -1,5 +1,6 @@
 package fadergs.edu.br.sigavan;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -65,7 +67,7 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
         final String email = currentFirebaseUser.getEmail().toString();
 
         final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
-        Query query1 = emailRef.orderByChild("motorista").equalTo(email);
+        Query query1 = emailRef.orderByChild("email").equalTo(email);
         query1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -116,7 +118,7 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
-                                    //Se ocorrer um erro
+                                    Toast.makeText(CadastrarPassageiroActivity.this, "texto", Toast.LENGTH_LONG).show();
                                 }
                             });
                             new AlertDialog.Builder(CadastrarPassageiroActivity.this)

@@ -95,7 +95,7 @@ public class MotoristaActivity extends AppCompatActivity {
                 System.out.println("EMAIL LOGADO" + email);
 
                 final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
-                Query query1 = emailRef.orderByChild("motorista").equalTo(email);
+                Query query1 = emailRef.orderByChild("email").equalTo(email);
                 query1.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -232,7 +232,7 @@ public class MotoristaActivity extends AppCompatActivity {
                     Object nomeFsculdade = faculdadesSnapshot.child("faculdades").getValue();
                     String modificado = "";
                     if (nomeFsculdade == null) {
-                        //System.out.println("É NULL");
+                        System.out.println("É NULL");
                     } else {
                         String nome = nomeFsculdade.toString();
                         String[] separado = nome.split(",");
