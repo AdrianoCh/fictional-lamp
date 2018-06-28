@@ -144,26 +144,58 @@ public class MotoristaActivity extends AppCompatActivity {
                                 final String data = getTime("dd-MM-yyyy");
 
                                 final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
-                                Query query1 = emailRef.orderByChild(preferenciaSeparada[0].trim()).equalTo(preferenciaSeparada[1].trim());
+                                //Query query1 = emailRef.orderByChild(preferenciaSeparada[0].trim()).equalTo(preferenciaSeparada[1].trim());
+                                Query query1 = emailRef.orderByChild("motorista").equalTo(email);
                                 query1.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        if (email.equals(emailBanco)) {
                                             for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                                                String passageiroKey = childSnapshot.getKey();
-                                                System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
-                                                Object nome = childSnapshot.child("nome").getValue();
-                                                Object presenca = childSnapshot.child(data).getValue();
-                                                Object testeBusca = childSnapshot.child("PUCRS");
+                                                String preferencias = atualizarRecuperacaoPreferencias();
+                                                //System.out.println("PREFERENCIA" + preferencias);
+                                                String[] preferenciaSeparada = preferencias.split("=");
 
-                                                if ((nome != null) && (presenca != null)) {
-                                                    viewholder.setNome(nome.toString());
-                                                    viewholder.setPresenca(presenca.toString());
-                                                } else {
-                                                    viewholder.setNome("Nenhum Aluno Marcou Presença Hoje");
-                                                }
+                                                System.out.println("FACULDADE: " + preferenciaSeparada[0].trim());
+                                                System.out.println("TURNO: " + preferenciaSeparada[1].trim());
+
+                                                Query query1 = emailRef.orderByChild(preferenciaSeparada[0].trim().toString()).equalTo(preferenciaSeparada[1].trim().toString());
+                                                query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        if (email.equals(emailBanco)) {
+                                                            for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                                                String passageiroKey = childSnapshot.getKey();
+
+                                                                System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
+                                                                Object nome = childSnapshot.child("nome").getValue();
+                                                                Object presenca = childSnapshot.child(data).getValue();
+
+                                                                if ((nome != null) && (presenca != null)) {
+                                                                    viewholder.setNome(nome.toString());
+                                                                    viewholder.setPresenca(presenca.toString());
+                                                                } else {
+                                                                    viewholder.setNome("Nenhum Aluno Marcou Presença Hoje");
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+                                                        //Se ocorrer um erro
+                                                    }
+                                                });
+
+
+
+
+
+
+
+
+
+
+
                                             }
-                                        }
                                     }
 
                                     @Override
