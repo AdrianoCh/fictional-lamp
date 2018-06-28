@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/addpassageiro"
+        android:icon="@drawable/ic_addpassageiro"
+        android:title="@string/cadastrar_passageiro"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/addfaculdade"
+        android:icon="@drawable/ic_addfaculdade"
+        android:title="@string/cadastrar_faculdade"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/logout"
+        android:title="Sair"
+        app:showAsAction="never" />
+</menu>

@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbaractivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ToolbarTheme"
+        app:titleTextColor="@android:color/white" />
 
     <ImageView
         android:id="@+id/iconeapp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/toolbaractivity"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:contentDescription="@string/icone"
         android:src="@drawable/ic_launcher_foreground" />
 
@@ -19,34 +29,25 @@
         android:layout_below="@id/iconeapp"
         android:layout_centerHorizontal="true"
         android:hint="@string/placeholder"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <TextView
         android:id="@+id/mensagemTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/dataTextView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="189dp"
+        android:layout_marginTop="20dp"
         android:hint="@string/placeholder"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-    <TextView
-        android:id="@+id/informaPresencaTextView"
-        android:layout_width="289dp"
-        android:layout_height="135dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="110dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <RadioGroup
         android:id="@+id/presencaRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/mensagemTextView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="239dp">
+        android:layout_marginTop="20dp">
 
         <RadioButton
             android:id="@+id/presente"
@@ -63,13 +64,22 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
     </RadioGroup>
 
+    <TextView
+        android:id="@+id/informaPresencaTextView"
+        android:layout_width="289dp"
+        android:layout_height="135dp"
+        android:layout_above="@id/confirmarPresencabutton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
     <Button
         android:id="@+id/confirmarPresencabutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="42dp"
+        android:layout_marginBottom="40dp"
         android:text="@string/confirmar"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 

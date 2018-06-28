@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
                     confirmarButton.setVisibility(View.INVISIBLE);
 
                     progressDialog.show();
-                    
+
                     thread.start();
                     Intent myIntent = new Intent(MainActivity.this, PassageiroActivity.class);
                     startActivity(myIntent);

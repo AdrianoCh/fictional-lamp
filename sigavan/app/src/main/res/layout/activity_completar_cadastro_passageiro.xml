@@ -17,10 +17,10 @@
         android:id="@+id/textoPrincipalCadastroPassageiro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/completandocadastro"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="60dp"
-        android:layout_below="@id/completandocadastro"
         android:text="@string/dias_aula"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
@@ -39,9 +39,9 @@
         android:id="@+id/tercaCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@id/segundaCheckbox"
         android:layout_below="@id/textoPrincipalCadastroPassageiro"
         android:layout_centerHorizontal="true"
-        android:layout_alignTop="@id/segundaCheckbox"
         android:text="@string/terca"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
@@ -49,9 +49,9 @@
         android:id="@+id/quartaCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textoPrincipalCadastroPassageiro"
         android:layout_alignStart="@id/sabadoCheckbox"
         android:layout_alignTop="@id/segundaCheckbox"
+        android:layout_below="@id/textoPrincipalCadastroPassageiro"
         android:text="@string/quarta"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
@@ -90,8 +90,8 @@
         android:id="@+id/domingoCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/quintaCheckbox"
         android:layout_alignStart="@id/sextaCheckbox"
+        android:layout_below="@id/quintaCheckbox"
         android:layout_marginTop="20dp"
         android:text="@string/domingo"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
