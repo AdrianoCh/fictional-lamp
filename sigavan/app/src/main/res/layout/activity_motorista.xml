@@ -6,18 +6,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbaractivity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-
-        android:background="@color/colorPrimary"/>
     <Spinner
-        android:id="@+id/selecionarFaculdadeSpinner"
-        android:layout_width="match_parent"
+        android:id="@+id/faculdadeSpinner"
+        android:layout_width="197dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbaractivity"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <android.support.v7.widget.RecyclerView
