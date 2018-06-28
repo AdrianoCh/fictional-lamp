@@ -56,11 +56,15 @@ public class CadastrarFaculdadeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int turnoSelecionado = turnoRadioGroup.getCheckedRadioButtonId();
                 RadioButton radioButton = (RadioButton) findViewById(turnoSelecionado);
-                String textoTurno = (String) radioButton.getText();
 
                 String nome = nomeFaculdadeEditText.getText().toString();
-
-                salvarBanco(nome, textoTurno);
+                if((nome.equals("")) || (radioButton == null)) {
+                    Toast.makeText(CadastrarFaculdadeActivity.this, R.string.errofaculdade, Toast.LENGTH_LONG).show();
+                }
+                else {
+                    String textoTurno = (String) radioButton.getText();
+                    salvarBanco(nome, textoTurno);
+                }
             }
         });
     }
@@ -87,6 +91,9 @@ public class CadastrarFaculdadeActivity extends AppCompatActivity {
                                 emailRef.child(motoristaKey).child("faculdades").child(nome).setValue(turno);
 
                                 Toast.makeText(CadastrarFaculdadeActivity.this,"Faculdade cadastrada com sucesso!",Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(CadastrarFaculdadeActivity.this,MotoristaActivity.class);
+                                startActivity(intent);
+                                finish();
                             }
                         }
 

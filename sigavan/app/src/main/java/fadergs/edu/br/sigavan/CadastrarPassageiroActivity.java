@@ -96,50 +96,54 @@ public class CadastrarPassageiroActivity extends AppCompatActivity {
                         public void onClick(View view) {
                             final String emailPassageiro = emailPassageiroEditText.getText().toString();
 
-                            Query query1 = emailRef.orderByChild("email").equalTo(emailPassageiro).limitToFirst(1);
-                            query1.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (emailPassageiro.equals("") || (faculdadeSpinner.getSelectedItem().toString().equals(""))) {
+                                Toast.makeText(CadastrarPassageiroActivity.this, R.string.erropassageiro, Toast.LENGTH_LONG).show();
+                            } else {
 
-                                    for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                                        String passageiroKey = childSnapshot.getKey();
-                                        System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
+                                Query query1 = emailRef.orderByChild("email").equalTo(emailPassageiro).limitToFirst(1);
+                                query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                        String faculdadeSelecionada = (String) faculdadeSpinner.getSelectedItem();
-                                        System.out.println("VALOR SELECIONADO ANTES DE SALVAR : " + faculdadeSelecionada);
-                                        String[] faculdadeSeparada = faculdadeSelecionada.split("=");
+                                        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                            String passageiroKey = childSnapshot.getKey();
+                                            System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
 
-                                        emailRef.child(passageiroKey).child("motorista").setValue(email);
-                                        emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0].trim()).child("motorista").setValue(email);
-                                        emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0].trim()).child("turno").setValue(faculdadeSeparada[1].trim());
-                                        emailRef.child(passageiroKey).child(faculdadeSeparada[0].trim()).setValue(faculdadeSeparada[1].trim());
+                                            String faculdadeSelecionada = (String) faculdadeSpinner.getSelectedItem();
+                                            System.out.println("VALOR SELECIONADO ANTES DE SALVAR : " + faculdadeSelecionada);
+                                            String[] faculdadeSeparada = faculdadeSelecionada.split("=");
+
+                                            emailRef.child(passageiroKey).child("motorista").setValue(email);
+                                            emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0].trim()).child("motorista").setValue(email);
+                                            emailRef.child(passageiroKey).child("aulas").child(faculdadeSeparada[0].trim()).child("turno").setValue(faculdadeSeparada[1].trim());
+                                            emailRef.child(passageiroKey).child(faculdadeSeparada[0].trim()).setValue(faculdadeSeparada[1].trim());
+                                        }
                                     }
-                                }
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                    Toast.makeText(CadastrarPassageiroActivity.this, "texto", Toast.LENGTH_LONG).show();
-                                }
-                            });
-                            new AlertDialog.Builder(CadastrarPassageiroActivity.this)
-                                    .setTitle("Cadastro de Aluno")
-                                    .setMessage("Deseja cadastrar outro aluno?")
-                                    .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            emailPassageiroEditText.setText("");
-                                        }
-                                    })
-                                    .setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            Intent intent = new Intent(CadastrarPassageiroActivity.this, MotoristaActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    }).create().show();
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Toast.makeText(CadastrarPassageiroActivity.this, "texto", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                                new AlertDialog.Builder(CadastrarPassageiroActivity.this)
+                                        .setTitle("Cadastro de Aluno")
+                                        .setMessage("Deseja cadastrar outro aluno?")
+                                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                emailPassageiroEditText.setText("");
+                                            }
+                                        })
+                                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                Intent intent = new Intent(CadastrarPassageiroActivity.this, MotoristaActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        }).create().show();
 
-
+                            }
                         }
                     });
                 }

@@ -13,7 +13,7 @@
     <string name="telefone">Telefone: </string>
     <string name="dicaTelefone">55999999999</string>
     <string name="placeholder">placeholder</string>
-    <string name="errocadastro">Dados preenchidos corretamente. Por favor, preencha o número de telefone e o modo de uso corretamente.</string>
+    <string name="errocadastro">Dados preenchidos incorretamente. Por favor, preencha o número de telefone e o modo de uso corretamente.</string>
     <string name="identificando">Identificando usuário</string>
     <string name="porfavoraguarde">Por favor aguarde.</string>
 
@@ -46,6 +46,7 @@
     <string name="manha">Manhã</string>
     <string name="tarde">Tarde</string>
     <string name="noite">Noite</string>
+    <string name="errofaculdade">Dados preenchidos incorretamente. Por favor, preencha o nome da faculdade e o turno corretamente.</string>
 
     //Cadastrar Passageiro
     <string name="cadastrar_passageiro">Cadastrar Passageiro</string>
@@ -55,6 +56,7 @@
     <string name="sim">SIM</string>
     <string name="nao">NÃO</string>
     <string name="dialog_mensagem">Gostaria continuar adicionando passageiros?</string>
+    <string name="erropassageiro">Dado preenchido incorretamente. Por favor, preencha o email do passageiro corretamente.</string>
 
     //Completar Cadastro Passageiro
     <string name="completar_cadastro">Completando seu cadastro</string>

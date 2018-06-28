@@ -51,8 +51,9 @@
         android:layout_below="@id/emailPassageiroEditText"
         android:layout_marginEnd="30dp"
         android:layout_marginTop="45dp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        android:layout_toEndOf="@id/faculdadeTextView" />
+        android:layout_toEndOf="@id/faculdadeTextView"
+        android:spinnerMode="dialog"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <Button
         android:id="@+id/confirmarCadastroButton"
@@ -62,5 +63,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="130dp"
         android:text="@string/confirmar"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 </RelativeLayout>

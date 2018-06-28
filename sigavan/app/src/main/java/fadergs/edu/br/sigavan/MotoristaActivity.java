@@ -321,30 +321,22 @@ public class MotoristaActivity extends AppCompatActivity {
                 for (DataSnapshot faculdadesSnapshot : dataSnapshot.getChildren()) {
                     Object nomeFsculdade = faculdadesSnapshot.child("faculdades").getValue();
                     String modificado = "";
-                    Boolean teste = false;
                     if (nomeFsculdade == null) {
                         System.out.println("É NULL");
-                    } else if (nomeFsculdade.toString().contains("{") || nomeFsculdade.toString().contains("}")){
+                    } else {
                         String nome = nomeFsculdade.toString();
-                        if(nome.contains("{")){
-                            modificado = nome.replaceAll("\\{", "");
-                            if (modificado.contains("}")){
-                                modificado = modificado.replaceAll("\\}", "");
+                        String[] separado = nome.split(",");
+                        for (String item : separado) {
+                            if ((item.contains("{")) || (item.contains("}"))) {
+                                modificado = item.replaceAll("\\{", "");
+                                faculdades.add(modificado);
+                            } else if ((item.contains("{")) || (item.contains("}"))) {
+                                modificado = item.replaceAll("\\}", "");
                                 faculdades.add(modificado);
                             } else {
-                                faculdades.add(modificado);
-                            }
-                        } else  if (nome.contains("}")){
-                            modificado = nome.replaceAll("\\}", "");
-                            if (modificado.contains("{")){
-                                modificado = modificado.replaceAll("\\{", "");
-                                faculdades.add(modificado);
-                            } else {
-                                faculdades.add(modificado);
+                                faculdades.add(item);
                             }
                         }
-                    } else {
-                        faculdades.add(nomeFsculdade.toString());
                     }
                 }
                 ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(MotoristaActivity.this, android.R.layout.simple_spinner_item, faculdades);
