@@ -29,7 +29,10 @@
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
         <!-- TODO Carlos = Layout do Toast, Alert Dialogue, Progressbar -->
     </style>
-
+    <style name="ToolbarTheme">
+        <item name="android:background">#004d4a</item>
+        <item name="android:textColorPrimary">#fff</item>
+    </style>
     <style name="NoActionBar" parent="Theme.AppCompat.FullVan">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

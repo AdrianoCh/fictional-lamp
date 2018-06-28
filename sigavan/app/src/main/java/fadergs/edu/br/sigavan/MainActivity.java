@@ -173,6 +173,30 @@ public class MainActivity extends AppCompatActivity {
                 // Verifica se existe a variavel primeirologin
                 String primeiroLogin = perfilUsuarioPassageiro.getPrimeiroLogin();
 
+                // ProgressBar
+                final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.setTitle(R.string.identificando);
+                progressDialog.setMessage(getResources().getString(R.string.porfavoraguarde));
+                progressDialog.setCanceledOnTouchOutside(false);
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        int i = 0;
+                        while (i < 100) {
+                            try {
+                                Thread.sleep(3000);
+                                progressDialog.incrementProgressBy(1);
+                                progressDialog.incrementSecondaryProgressBy(5);
+                                i++;
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        progressDialog.dismiss();
+                    }
+                });
 
                 if ((primeiroLogin.equals("false")) && (email.equals(emailBanco))) {
                     System.out.println("É PRIMEIRA VEZ");
@@ -181,10 +205,40 @@ public class MainActivity extends AppCompatActivity {
                 }
                 // TODO - Carlos ou Adriano > Verificar o primeiro uso do passageiro e forçar a completar o cadastro ao invés de abrir a tela de marcar presença.
                 if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Motorista"))) {
+                    TextView textoprincipal = (TextView) findViewById(R.id.textoPrincipal);
+                    TextView nomeTextView = (TextView) findViewById(R.id.nomeTextView);
+                    TextView tvTelefone = (TextView) findViewById(R.id.tvTelefone);
+
+                    textoprincipal.setVisibility(View.INVISIBLE);
+                    nomeTextView.setVisibility(View.INVISIBLE);
+                    nomeUsuarioTextView.setVisibility(View.INVISIBLE);
+                    tvTelefone.setVisibility(View.INVISIBLE);
+                    telefoneEditText.setVisibility(View.INVISIBLE);
+                    modoDeUsoRadioGroup.setVisibility(View.INVISIBLE);
+                    confirmarButton.setVisibility(View.INVISIBLE);
+
+                    progressDialog.show();
+
                     System.out.println("MOTORISTA");
+                    thread.start();
                     Intent myIntent = new Intent(MainActivity.this, MotoristaActivity.class);
                     startActivity(myIntent);
                 } else if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Passageiro"))) {
+                    TextView textoprincipal = (TextView) findViewById(R.id.textoPrincipal);
+                    TextView nomeTextView = (TextView) findViewById(R.id.nomeTextView);
+                    TextView tvTelefone = (TextView) findViewById(R.id.tvTelefone);
+
+                    textoprincipal.setVisibility(View.INVISIBLE);
+                    nomeTextView.setVisibility(View.INVISIBLE);
+                    nomeUsuarioTextView.setVisibility(View.INVISIBLE);
+                    tvTelefone.setVisibility(View.INVISIBLE);
+                    telefoneEditText.setVisibility(View.INVISIBLE);
+                    modoDeUsoRadioGroup.setVisibility(View.INVISIBLE);
+                    confirmarButton.setVisibility(View.INVISIBLE);
+
+                    progressDialog.show();
+
+                    thread.start();
                     Intent myIntent = new Intent(MainActivity.this, PassageiroActivity.class);
                     startActivity(myIntent);
 
