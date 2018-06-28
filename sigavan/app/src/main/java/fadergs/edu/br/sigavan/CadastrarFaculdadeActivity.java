@@ -85,6 +85,8 @@ public class CadastrarFaculdadeActivity extends AppCompatActivity {
                                 System.out.println("RESULTADO QUERY COM CHAVE: " + motoristaKey);
 
                                 emailRef.child(motoristaKey).child("faculdades").child(nome).setValue(turno);
+
+                                Toast.makeText(CadastrarFaculdadeActivity.this,"Faculdade cadastrada com sucesso!",Toast.LENGTH_LONG).show();
                             }
                         }
 

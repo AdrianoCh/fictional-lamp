@@ -8,7 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,8 +40,6 @@ import static fadergs.edu.br.sigavan.PassageiroActivity.getTime;
 public class MotoristaActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "Preferencias Faculdades";
 
-    private FloatingActionButton floatingActionButton;
-    private FloatingActionButton floatingActionButton2;
     private RecyclerView recyclerView;
     private DatabaseReference mDatabaseReference;
 
@@ -54,30 +55,12 @@ public class MotoristaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_motorista);
 
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
-        floatingActionButton2 = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
         faculdadeSpinner = (Spinner) findViewById(R.id.faculdadeSpinner);
 
         mFirebaseDataBase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
 
         mDataDatabaseReference = mFirebaseDataBase.getReference();
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MotoristaActivity.this, CadastrarFaculdadeActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MotoristaActivity.this, CadastrarPassageiroActivity.class);
-                startActivity(intent);
-            }
-        });
 
         recyclerView = (RecyclerView) findViewById(R.id.rvPassageiros);
         recyclerView.hasFixedSize();
@@ -230,7 +213,37 @@ public class MotoristaActivity extends AppCompatActivity {
 
         };
         recyclerView.setAdapter(recyclerAdapter);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarmactivity);
+        setSupportActionBar(toolbar);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu (Menu menu) {
+        // Inflate the menu
+        getMenuInflater().inflate(R.menu.menu_motorista, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.addfaculdade:
+                Intent intent = new Intent(MotoristaActivity.this, CadastrarFaculdadeActivity.class);
+                startActivity(intent);
+                return(true);
+            case R.id.addpassageiro:
+                Intent intent2 = new Intent(MotoristaActivity.this, CadastrarPassageiroActivity.class);
+                startActivity(intent2);
+                return(true);
+            case R.id.logout:
+                // TODO -> Adriano -> Inserir logout
+                return(true);
+        }
+        return(super.onOptionsItemSelected(item));
+    }
+
 
     public static class pupviewholder extends RecyclerView.ViewHolder {
         View mView;
