@@ -162,6 +162,7 @@ public class MotoristaActivity extends AppCompatActivity {
                                                                 viewholder.setPresenca(presenca.toString());
                                                             } else {
                                                                 viewholder.setNome("Nenhum Aluno Marcou Presença Hoje");
+                                                                viewholder.setPresenca("");
                                                             }
                                                         }
                                                     }
@@ -326,7 +327,7 @@ public class MotoristaActivity extends AppCompatActivity {
                             if (item.contains("{")) {
                                 modificado = item.replaceAll("\\{", "");
                                 faculdades.add(modificado);
-                            } else if (item.contains("}")) {
+                            } if (item.contains("}")) {
                                 modificado = item.replaceAll("\\}", "");
                                 faculdades.add(modificado);
                             } else {
