@@ -9,7 +9,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="200dp"
         android:contentDescription="@string/icone"
-        android:src="@drawable/ic_launcher_foreground" />
+        android:src="@mipmap/ic_launcher_vanbranca" />
 
     <TextView
         android:layout_width="match_parent"

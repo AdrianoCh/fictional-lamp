@@ -29,12 +29,84 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                     </map>
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_addfaculdade" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\carlo\Desktop\Van Branca.png" />
+                                      <entry key="outputName" value="ic_vanbranca" />
                                       <entry key="theme" value="HOLO_DARK" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                            <entry key="launcher">
+                              <value>
+                                <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="foregroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="ffffff" />
+                                      <entry key="foregroundImage" value="C:\Users\carlo\Desktop\Van Colorida.png" />
+                                      <entry key="webIconShape" value="CIRCLE" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                            <entry key="launcherLegacy">
+                              <value>
+                                <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="backgroundColor" value="009995" />
+                                      <entry key="iconShape" value="NONE" />
+                                      <entry key="imageAsset" value="C:\Users\carlo\Desktop\Van Branca.png" />
+                                      <entry key="outputName" value="ic_launcher_vanbranca" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -44,7 +116,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputIconType" value="ACTIONBAR" />
+                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
                           </map>
                         </option>
                       </PersistentState>

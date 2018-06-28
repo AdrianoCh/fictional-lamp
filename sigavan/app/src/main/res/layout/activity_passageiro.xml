@@ -20,7 +20,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:contentDescription="@string/icone"
-        android:src="@drawable/ic_launcher_foreground" />
+        android:src="@mipmap/ic_launcher_vanbranca" />
 
     <TextView
         android:id="@+id/dataTextView"
