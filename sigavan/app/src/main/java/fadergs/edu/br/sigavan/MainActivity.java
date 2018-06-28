@@ -180,23 +180,9 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.setMessage(getResources().getString(R.string.porfavoraguarde));
                 progressDialog.setCanceledOnTouchOutside(false);
 
-                progressDialog.show();
-
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        TextView textoprincipal = (TextView) findViewById(R.id.textoPrincipal);
-                        TextView nomeTextView = (TextView) findViewById(R.id.nomeTextView);
-                        TextView tvTelefone = (TextView) findViewById(R.id.tvTelefone);
-
-                        textoprincipal.setVisibility(View.INVISIBLE);
-                        nomeTextView.setVisibility(View.INVISIBLE);
-                        nomeUsuarioTextView.setVisibility(View.INVISIBLE);
-                        tvTelefone.setVisibility(View.INVISIBLE);
-                        telefoneEditText.setVisibility(View.INVISIBLE);
-                        modoDeUsoRadioGroup.setVisibility(View.INVISIBLE);
-                        confirmarButton.setVisibility(View.INVISIBLE);
-
                         int i = 0;
                         while (i < 100) {
                             try {
@@ -212,8 +198,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                thread.start();
-
                 if ((primeiroLogin.equals("false")) && (email.equals(emailBanco))) {
                     System.out.println("É PRIMEIRA VEZ");
                 } else {
@@ -221,10 +205,40 @@ public class MainActivity extends AppCompatActivity {
                 }
                 // TODO - Carlos ou Adriano > Verificar o primeiro uso do passageiro e forçar a completar o cadastro ao invés de abrir a tela de marcar presença.
                 if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Motorista"))) {
+                    TextView textoprincipal = (TextView) findViewById(R.id.textoPrincipal);
+                    TextView nomeTextView = (TextView) findViewById(R.id.nomeTextView);
+                    TextView tvTelefone = (TextView) findViewById(R.id.tvTelefone);
+
+                    textoprincipal.setVisibility(View.INVISIBLE);
+                    nomeTextView.setVisibility(View.INVISIBLE);
+                    nomeUsuarioTextView.setVisibility(View.INVISIBLE);
+                    tvTelefone.setVisibility(View.INVISIBLE);
+                    telefoneEditText.setVisibility(View.INVISIBLE);
+                    modoDeUsoRadioGroup.setVisibility(View.INVISIBLE);
+                    confirmarButton.setVisibility(View.INVISIBLE);
+
+                    progressDialog.show();
+
                     System.out.println("MOTORISTA");
+                    thread.start();
                     Intent myIntent = new Intent(MainActivity.this, MotoristaActivity.class);
                     startActivity(myIntent);
                 } else if ((email.equals(emailBanco)) && (perfilUsuarioPassageiro.getModoDeUso().equals("Passageiro"))) {
+                    TextView textoprincipal = (TextView) findViewById(R.id.textoPrincipal);
+                    TextView nomeTextView = (TextView) findViewById(R.id.nomeTextView);
+                    TextView tvTelefone = (TextView) findViewById(R.id.tvTelefone);
+
+                    textoprincipal.setVisibility(View.INVISIBLE);
+                    nomeTextView.setVisibility(View.INVISIBLE);
+                    nomeUsuarioTextView.setVisibility(View.INVISIBLE);
+                    tvTelefone.setVisibility(View.INVISIBLE);
+                    telefoneEditText.setVisibility(View.INVISIBLE);
+                    modoDeUsoRadioGroup.setVisibility(View.INVISIBLE);
+                    confirmarButton.setVisibility(View.INVISIBLE);
+
+                    progressDialog.show();
+                    
+                    thread.start();
                     Intent myIntent = new Intent(MainActivity.this, PassageiroActivity.class);
                     startActivity(myIntent);
 
