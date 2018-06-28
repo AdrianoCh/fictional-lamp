@@ -25,7 +25,6 @@
         <activity android:name=".MotoristaActivity" />
         <activity android:name=".CadastrarFaculdadeActivity" />
         <activity android:name=".CadastrarPassageiroActivity" />
-        <activity android:name=".CompletarCadastroPassageiroActivity"></activity>
     </application>
 
 </manifest>

@@ -83,45 +83,40 @@ public class PassageiroActivity extends AppCompatActivity {
 
                         System.out.println("TESTE ANTES DO IF : " + primeiroLogin);
 
-                        if (primeiroLogin.equals("true") && (email.equals(emailBanco))) {
-                            Intent myIntent = new Intent(PassageiroActivity.this, CompletarCadastroPassageiroActivity.class);
-                            startActivity(myIntent);
-                        } else {
-                            final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
-                            Query query1 = emailRef.orderByChild("email").equalTo(email).limitToFirst(1);
-                            query1.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
+                        final DatabaseReference emailRef = mFirebaseDataBase.getReference().child("users");
+                        Query query1 = emailRef.orderByChild("email").equalTo(email).limitToFirst(1);
+                        query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                    for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                                        String passageiroKey = childSnapshot.getKey();
-                                        System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
+                                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                    String passageiroKey = childSnapshot.getKey();
+                                    System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
 
-                                        Object resultadoObject = dataSnapshot.child(passageiroKey).child("aulas").getValue();
+                                    Object resultadoObject = dataSnapshot.child(passageiroKey).child("aulas").getValue();
 
-                                        if (resultadoObject != null) {
-                                            String resultado = resultadoObject.toString();
+                                    if (resultadoObject != null) {
+                                        String resultado = resultadoObject.toString();
 
-                                            String separado[] = resultado.split("=");
-                                            String formatado = separado[0].replaceAll("\\{", "").trim();
+                                        String separado[] = resultado.split("=");
+                                        String formatado = separado[0].replaceAll("\\{", "").trim();
 
-                                            String data = getTime("dd-MM-yyyy");
+                                        String data = getTime("dd-MM-yyyy");
 
-                                            emailRef.child(passageiroKey).child("aulas").child(formatado).child("presenca").child(data).setValue(textoPresenca);
-                                            informaPresenca.setText(getString(R.string.primeira_parte_mensagem) + " " + textoPresenca + " " + getString(R.string.segunda_parte_mensagem));
-                                            emailRef.child(passageiroKey).child(data).setValue(textoPresenca);
-                                        } else {
-                                            mensagemTextView.setText("Você não possui aulas cadastradas");
-                                        }
+                                        emailRef.child(passageiroKey).child("aulas").child(formatado).child("presenca").child(data).setValue(textoPresenca);
+                                        informaPresenca.setText(getString(R.string.primeira_parte_mensagem) + " " + textoPresenca + " " + getString(R.string.segunda_parte_mensagem));
+                                        emailRef.child(passageiroKey).child(data).setValue(textoPresenca);
+                                    } else {
+                                        mensagemTextView.setText("Você não possui aulas cadastradas");
                                     }
                                 }
+                            }
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                    //Se ocorrer um erro
-                                }
-                            });
-                        }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                //Se ocorrer um erro
+                            }
+                        });
                     }
 
                     @Override
@@ -147,29 +142,7 @@ public class PassageiroActivity extends AppCompatActivity {
 
         mensagemTextView.setText(nome + ", você está presente?");
 
-        Calendar c = Calendar.getInstance();
-        int numeroDiaSemana = c.get(Calendar.DAY_OF_WEEK);
-        String dia = "";
-
-        if (numeroDiaSemana == 1) {
-            dia = "Domingo";
-        } else if (numeroDiaSemana == 2) {
-            dia = "Segunda";
-        } else if (numeroDiaSemana == 3) {
-            dia = "Terça";
-        } else if (numeroDiaSemana == 4) {
-            dia = "Quarta";
-        } else if (numeroDiaSemana == 5) {
-            dia = "Quinta";
-        } else if (numeroDiaSemana == 6) {
-            dia = "Sexta";
-        } else if (numeroDiaSemana == 7) {
-            dia = "Sábado";
-        }
-
         String data = getTime("dd/MM/yyyy");
-
-        dataTextView.setText(dia + ", " + data);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarpactivity);
         setSupportActionBar(toolbar);
@@ -232,7 +205,6 @@ public class PassageiroActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.logout:
                 AuthUI.getInstance().signOut(this);
@@ -288,7 +260,7 @@ public class PassageiroActivity extends AppCompatActivity {
     }
 
     public void onSignedOutCleanUp() {
-        if(mChildEventListener != null){
+        if (mChildEventListener != null) {
             mDataDatabaseReference.removeEventListener(mChildEventListener);
             mChildEventListener = null;
         }
