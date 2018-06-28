@@ -40,10 +40,10 @@ public class PassageiroActivity extends AppCompatActivity {
     private TextView dataTextView;
     private TextView informaPresenca;
 
-    private FirebaseAuth mFirebaseAuth;
     private FirebaseDatabase mFirebaseDataBase;
     private DatabaseReference mDataDatabaseReference;
     private ChildEventListener mChildEventListener;
+    private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
@@ -62,10 +62,6 @@ public class PassageiroActivity extends AppCompatActivity {
 
         mFirebaseDataBase = FirebaseDatabase.getInstance();
         mDataDatabaseReference = mFirebaseDataBase.getReference().child("users");
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         confirmarPresencaButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +99,7 @@ public class PassageiroActivity extends AppCompatActivity {
 
                                         Object resultadoObject = dataSnapshot.child(passageiroKey).child("aulas").getValue();
 
-                                        if(resultadoObject != null){
+                                        if (resultadoObject != null) {
                                             String resultado = resultadoObject.toString();
 
                                             String separado[] = resultado.split("=");
@@ -175,6 +171,9 @@ public class PassageiroActivity extends AppCompatActivity {
 
         dataTextView.setText(dia + ", " + data);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarpactivity);
+        setSupportActionBar(toolbar);
+
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -195,27 +194,51 @@ public class PassageiroActivity extends AppCompatActivity {
                 }
             }
         };
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarpactivity);
-        setSupportActionBar(toolbar);
     }
 
     @Override
-    public boolean onCreateOptionsMenu (Menu menu) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
+                // Sign-in succeeded, set up the UI
+                Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                // Sign in was canceled by the user, finish the activity
+                Toast.makeText(this, "Sign in canceled", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu
         getMenuInflater().inflate(R.menu.menu_passageiro, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
             case R.id.logout:
-                // TODO -> Adriano -> Inserir logout
-                return(true);
+                AuthUI.getInstance().signOut(this);
+                return true;
         }
-        return(super.onOptionsItemSelected(item));
+        return (super.onOptionsItemSelected(item));
     }
 
     public static String getTime(String format) {
@@ -228,22 +251,8 @@ public class PassageiroActivity extends AppCompatActivity {
         return formato.format(data);
     }
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
-    }
-
     public void onSignedInInitialize(String username) {
         perfilUsuarioRegistrado = username;
-
         DatabaseReference usersRef = mFirebaseDataBase.getReference().child("users");
         usersRef.orderByValue().addChildEventListener(new ChildEventListener() {
             @Override
@@ -279,6 +288,9 @@ public class PassageiroActivity extends AppCompatActivity {
     }
 
     public void onSignedOutCleanUp() {
-
+        if(mChildEventListener != null){
+            mDataDatabaseReference.removeEventListener(mChildEventListener);
+            mChildEventListener = null;
+        }
     }
 }

@@ -3,6 +3,7 @@ package fadergs.edu.br.sigavan;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -39,6 +41,8 @@ import static fadergs.edu.br.sigavan.PassageiroActivity.getTime;
 
 public class MotoristaActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "Preferencias Faculdades";
+    private static final int RC_SIGN_IN = 1;
+    private String perfilUsuarioRegistrado;
 
     private RecyclerView recyclerView;
     private DatabaseReference mDatabaseReference;
@@ -82,9 +86,9 @@ public class MotoristaActivity extends AppCompatActivity {
                 query1.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                                popularSpinner();
-                            }
+                        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                            popularSpinner();
+                        }
                     }
 
                     @Override
@@ -94,6 +98,7 @@ public class MotoristaActivity extends AppCompatActivity {
                 });
                 faculdadeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
                         Object item = parent.getItemAtPosition(pos);
                         String selecionado = item.toString();
 
@@ -132,53 +137,42 @@ public class MotoristaActivity extends AppCompatActivity {
                                 query1.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                            for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                                                String preferencias = atualizarRecuperacaoPreferencias();
-                                                //System.out.println("PREFERENCIA" + preferencias);
-                                                String[] preferenciaSeparada = preferencias.split("=");
+                                        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                            String preferencias = atualizarRecuperacaoPreferencias();
+                                            //System.out.println("PREFERENCIA" + preferencias);
+                                            String[] preferenciaSeparada = preferencias.split("=");
 
-                                                System.out.println("FACULDADE: " + preferenciaSeparada[0].trim());
-                                                System.out.println("TURNO: " + preferenciaSeparada[1].trim());
+                                            System.out.println("FACULDADE: " + preferenciaSeparada[0].trim());
+                                            System.out.println("TURNO: " + preferenciaSeparada[1].trim());
 
-                                                Query query1 = emailRef.orderByChild(preferenciaSeparada[0].trim().toString()).equalTo(preferenciaSeparada[1].trim().toString());
-                                                query1.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                                        if (email.equals(emailBanco)) {
-                                                            for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                                                                String passageiroKey = childSnapshot.getKey();
+                                            Query query1 = emailRef.orderByChild(preferenciaSeparada[0].trim().toString()).equalTo(preferenciaSeparada[1].trim().toString());
+                                            query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    if (email.equals(emailBanco)) {
+                                                        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                                            String passageiroKey = childSnapshot.getKey();
 
-                                                                System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
-                                                                Object nome = childSnapshot.child("nome").getValue();
-                                                                Object presenca = childSnapshot.child(data).getValue();
+                                                            System.out.println("RESULTADO QUERY COM CHAVE: " + passageiroKey);
+                                                            Object nome = childSnapshot.child("nome").getValue();
+                                                            Object presenca = childSnapshot.child(data).getValue();
 
-                                                                if ((nome != null) && (presenca != null)) {
-                                                                    viewholder.setNome(nome.toString());
-                                                                    viewholder.setPresenca(presenca.toString());
-                                                                } else {
-                                                                    viewholder.setNome("Nenhum Aluno Marcou Presença Hoje");
-                                                                }
+                                                            if ((nome != null) && (presenca != null)) {
+                                                                viewholder.setNome(nome.toString());
+                                                                viewholder.setPresenca(presenca.toString());
+                                                            } else {
+                                                                viewholder.setNome("Nenhum Aluno Marcou Presença Hoje");
                                                             }
                                                         }
                                                     }
+                                                }
 
-                                                    @Override
-                                                    public void onCancelled(DatabaseError databaseError) {
-                                                        //Se ocorrer um erro
-                                                    }
-                                                });
-
-
-
-
-
-
-
-
-
-
-
-                                            }
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+                                                    //Se ocorrer um erro
+                                                }
+                                            });
+                                        }
                                     }
 
                                     @Override
@@ -216,32 +210,79 @@ public class MotoristaActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarmactivity);
         setSupportActionBar(toolbar);
+
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    onSignedInInitialize(user.getDisplayName());
+                } else {
+                    onSignedOutCleanUp();
+                    startActivityForResult(
+                            AuthUI.getInstance()
+                                    .createSignInIntentBuilder()
+                                    .setIsSmartLockEnabled(false)
+                                    .setProviders(
+                                            AuthUI.GOOGLE_PROVIDER,
+                                            AuthUI.EMAIL_PROVIDER)
+                                    .build(),
+                            RC_SIGN_IN);
+                }
+            }
+        };
     }
 
     @Override
-    public boolean onCreateOptionsMenu (Menu menu) {
-        // Inflate the menu
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
+                // Sign-in succeeded, set up the UI
+                Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                // Sign in was canceled by the user, finish the activity
+                Toast.makeText(this, "Sign in canceled", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_motorista, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
             case R.id.addfaculdade:
                 Intent intent = new Intent(MotoristaActivity.this, CadastrarFaculdadeActivity.class);
                 startActivity(intent);
-                return(true);
+                return (true);
             case R.id.addpassageiro:
                 Intent intent2 = new Intent(MotoristaActivity.this, CadastrarPassageiroActivity.class);
                 startActivity(intent2);
-                return(true);
+                return (true);
             case R.id.logout:
-                // TODO -> Adriano -> Inserir logout
-                return(true);
+                AuthUI.getInstance().signOut(this);
+                return true;
         }
-        return(super.onOptionsItemSelected(item));
+        return (super.onOptionsItemSelected(item));
     }
 
 
@@ -310,5 +351,50 @@ public class MotoristaActivity extends AppCompatActivity {
         String preferencia = settings.getString("Faculdade", "");
         System.out.println("TESTE PREFERENCIAS" + preferencia);
         return preferencia;
+    }
+
+    public void onSignedInInitialize(String username) {
+        perfilUsuarioRegistrado = username;
+
+        DatabaseReference usersRef = mFirebaseDataBase.getReference().child("users");
+        usersRef.orderByValue().addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                PerfilUsuarioPassageiro perfilUsuarioPassageiro = dataSnapshot.getValue(PerfilUsuarioPassageiro.class);
+
+                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                String email = currentFirebaseUser.getEmail().toString();
+                String emailServidor = dataSnapshot.child("email").getValue().toString();
+
+            }
+
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void onSignedOutCleanUp() {
+        if(mChildEventListener != null){
+            mDataDatabaseReference.removeEventListener(mChildEventListener);
+            mChildEventListener = null;
+        }
     }
 }
